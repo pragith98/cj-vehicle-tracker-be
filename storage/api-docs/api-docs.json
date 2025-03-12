@@ -1,0 +1,20 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "CJ Vehicle Tracker API",
+        "version": "1"
+    },
+    "paths": {
+        "/users": {
+            "get": {
+                "summary": "Get users",
+                "operationId": "7e2f5799553ec93c9c43e2a58490d447",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        }
+    }
+}
