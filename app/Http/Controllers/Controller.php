@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+/*
+ * @copyright (c) 2025 Pragith Lakshan Thilakarathna
+ * All rights reserved. 
+ * This code is proprietary to CJNextGenSys. 
+ * Unauthorized use, reproduction, modification, distribution, or sale 
+ * without the explicit written permission of CJNextGenSys is strictly prohibited.
+ * For inquiries, please contact: [info@cjnextgensys.com]
+*/
 
-/** 
- * @OA\Info(
- *  title="CJ Vehicle Tracker API", 
- *  version="1"
- * )
- */ 
+namespace App\Http\Controllers;
 
 abstract class Controller
 {
