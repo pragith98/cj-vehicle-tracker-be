@@ -9,18 +9,20 @@
  * For inquiries, please contact: [info@cjnextgensys.com]
 */
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
 
 /**
  * @OA\Schema(
  *     schema="UpdateUserRequest",
  *     type="object",
  *     title="User Update Request",
- *     required={"name", "email"},
- *     @OA\Property(property="name", type="string", example="samantha"),
+ *     required={"username", "email"},
+ *     @OA\Property(property="username", type="string", example="samantha"),
  *     @OA\Property(property="email", type="string", example="samantha@example.com")
  * )
  */
@@ -42,12 +44,24 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'max:255'],
+            'username' => [
+                'required', 
+                'max:255',
+                Rule::unique('users', 'username')->ignore($this->id)
+            ],
             'email' => [
                 'required', 
                 'max:255', 'email', 
                 Rule::unique('users', 'email')->ignore($this->id)
             ]
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        // Get validation errors as a flat array
+        $errors = $validator->errors()->all();
+
+        throw new HttpResponseException(response()->json(['errors' => $errors], 422));
     }
 }

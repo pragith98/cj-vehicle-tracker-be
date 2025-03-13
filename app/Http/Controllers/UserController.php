@@ -12,9 +12,9 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ApiResponse;
-use App\Http\Requests\PaginatedUserRequest;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\User\PaginatedUserRequest;
+use App\Http\Requests\User\StoreUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
 use App\Http\Resources\UserPaginatedCollection;
 use App\Http\Resources\UserResource;
 use App\Repositories\Interfaces\UserRepositoryInterface;
@@ -80,7 +80,7 @@ class UserController extends Controller
      *         name="limit",
      *         in="query",
      *         required=true,
-     *         @OA\Schema(type="integer", format="int64", example=10)
+     *         @OA\Schema(type="integer", format="int64", example=20)
      *     ),
      *     @OA\Parameter(
      *         name="page",
@@ -167,6 +167,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
+        $id = (int) $id;
         try {
             $user = $this->repository->getById($id);
             return new UserResource($user);
@@ -210,6 +211,7 @@ class UserController extends Controller
         UpdateUserRequest $request, 
         string $id
     ) {
+        $id = (int) $id;
         try {
             $user = $this->repository->update($id, 
                                               $request);
@@ -247,6 +249,7 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
+        $id = (int) $id;
         try {
             $this->repository->delete($id);
             return response()->json(['success' => true], 200);

@@ -89,7 +89,7 @@
                         "schema": {
                             "type": "integer",
                             "format": "int64",
-                            "example": 10
+                            "example": 20
                         }
                     },
                     {
@@ -236,12 +236,12 @@
             "StoreUserRequest": {
                 "title": "User Create Request",
                 "required": [
-                    "name",
+                    "username",
                     "email",
                     "password"
                 ],
                 "properties": {
-                    "name": {
+                    "username": {
                         "type": "string",
                         "example": "samantha"
                     },
@@ -259,11 +259,11 @@
             "UpdateUserRequest": {
                 "title": "User Update Request",
                 "required": [
-                    "name",
+                    "username",
                     "email"
                 ],
                 "properties": {
-                    "name": {
+                    "username": {
                         "type": "string",
                         "example": "samantha"
                     },
@@ -286,7 +286,7 @@
                     "total": {
                         "type": "integer",
                         "format": "int64",
-                        "example": 10
+                        "example": 20
                     }
                 },
                 "type": "object"
@@ -299,7 +299,7 @@
                         "format": "int64",
                         "example": "1"
                     },
-                    "name": {
+                    "username": {
                         "type": "string",
                         "example": "samantha"
                     },

@@ -11,9 +11,9 @@
 
 namespace App\Repositories\Interfaces;
 
-use App\Http\Requests\PaginatedUserRequest;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\User\PaginatedUserRequest;
+use App\Http\Requests\User\StoreUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Support\Collection;
 
@@ -23,14 +23,14 @@ interface UserRepositoryInterface
 
   public function getPaginated(PaginatedUserRequest $request): array;
   
-  public function getById($id): User;
+  public function getById(int $id): User;
   
   public function create(StoreUserRequest $request): User;
   
   public function update(
-    $id,
+    int $id,
     UpdateUserRequest $request
   ): User;
   
-  public function delete($id): bool;
+  public function delete(int $id): bool;
 }

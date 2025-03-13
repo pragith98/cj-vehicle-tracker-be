@@ -21,7 +21,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *     type="object",
  *     title="User Resource",
  *     @OA\Property(property="id", type="integer", format="int64", example="1"),
- *     @OA\Property(property="name", type="string", example="samantha"),
+ *     @OA\Property(property="username", type="string", example="samantha"),
  *     @OA\Property(property="email", type="string", example="samantha@example.com"),
  * )
  */
@@ -36,7 +36,7 @@ class UserResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'username' => $this->username,
             'email' => $this->email
         ];
     }

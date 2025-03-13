@@ -9,7 +9,7 @@
  * For inquiries, please contact: [info@cjnextgensys.com]
 */
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
