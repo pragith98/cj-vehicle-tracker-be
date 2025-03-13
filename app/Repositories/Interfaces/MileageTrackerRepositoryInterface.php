@@ -33,4 +33,6 @@ interface MileageTrackerRepositoryInterface
     ): MileageTracker;
 
     public function delete(int $id): bool;
+
+    public function generateKey(int $id): MileageTracker;
 }

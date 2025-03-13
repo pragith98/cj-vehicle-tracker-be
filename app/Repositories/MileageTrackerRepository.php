@@ -113,4 +113,49 @@ class MileageTrackerRepository implements MileageTrackerRepositoryInterface
             throw new Exception("Failed to delete mileage tracker.", 500);
         }
     }
+
+    public function generateKey(int $id): MileageTracker {
+        try {
+            $mileageTracker = $this->mileageTracker->findOrFail($id);
+
+             // Generate a new key pair
+             $config = [
+                "digest_alg" => "sha512",
+                "private_key_bits" => 2048,
+                "private_key_type" => OPENSSL_KEYTYPE_RSA,
+            ];
+
+            // Create the key pair
+            $keyPair = openssl_pkey_new($config);
+            if (!$keyPair) {
+                throw new Exception("Failed to create key pair.", 500);
+            }
+
+            // Extract the private key
+            $privateKey = '';
+            if (!openssl_pkey_export($keyPair, $privateKey)) {
+                throw new Exception("Failed to export private key.", 500);
+            }
+
+            // Extract the public key
+            $publicKeyDetails = openssl_pkey_get_details($keyPair);
+            if (!$publicKeyDetails) {
+                throw new Exception("Failed to get public key details.", 500);
+            }
+            $publicKey = $publicKeyDetails['key'];
+
+            $mileageTracker->public_key = $publicKey;
+
+            $mileageTracker->save();
+
+            // Attach the private key to the model (not saving it to the database)
+            $mileageTracker->private_key = $privateKey;
+
+            return $mileageTracker;
+        } catch (ModelNotFoundException $e) {
+            throw new Exception("Mileage tracker with ID {$id} not found.", 404);
+        } catch (Exception $e) {
+            throw new Exception("Failed to update mileage tracker key.", 500);
+        }
+    }
 }

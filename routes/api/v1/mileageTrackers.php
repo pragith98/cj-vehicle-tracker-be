@@ -19,4 +19,5 @@ Route::prefix('mileage-trackers')->group(function () {
   Route::get('/{id}', [MileageTrackerController::class, 'show']);
   Route::put('/{id}', [MileageTrackerController::class, 'update']);
   Route::delete('/{id}', [MileageTrackerController::class, 'destroy']);
+  Route::put('/{id}/generate-key', [MileageTrackerController::class, 'generateKey']);
 });

@@ -16,7 +16,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class PaginatedMileageTrackerRequest extends FormRequest
 {
     /**
-     * Determine if the mileage tracker is authorized to make this request.
+     * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {

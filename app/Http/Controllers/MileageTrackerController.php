@@ -253,4 +253,41 @@ class MileageTrackerController extends Controller
             return ApiResponse::error($e->getMessage(), 404);
         }
     }
+
+    /**
+     * @OA\Put(
+     *     path="/mileage-trackers/{id}/generate-key",
+     *     summary="Update a mileage tracker key",
+     *     tags={"Mileage Trackers"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID of the mileage tracker to update key",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Mileage tracker key updated successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/MileageTrackerResource")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Mileage tracker not found"
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid input"
+     *     )
+     * )
+     */
+    public function generateKey(string $id) {
+        $id = (int) $id;
+        try {
+            $mileageTracker = $this->repository->generateKey($id);
+            return new MileageTrackerResource($mileageTracker);
+        } catch (Exception $e) {
+            return ApiResponse::error($e->getMessage(), 404);
+        }
+    }
 }

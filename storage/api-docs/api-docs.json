@@ -233,6 +233,44 @@
                 }
             }
         },
+        "/mileage-trackers/{id}/generate-key": {
+            "put": {
+                "tags": [
+                    "Mileage Trackers"
+                ],
+                "summary": "Update a mileage tracker key",
+                "operationId": "990b1cfdd5db6d2c6d5b56cb00016ae3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the mileage tracker to update key",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Mileage tracker key updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MileageTrackerResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Mileage tracker not found"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
         "/users": {
             "get": {
                 "tags": [
