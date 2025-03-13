@@ -9,11 +9,13 @@
  * For inquiries, please contact: [info@cjnextgensys.com]
 */
 
-namespace App\Models;
+namespace App\Helpers;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Vehicle extends Model
-{
-    //
+class ApiResponse {
+  public static function error($message, $statusCode = 400) {
+    return response()->json([
+      'success' => false, 
+      'message' => $message
+    ], $statusCode);
+  }
 }
