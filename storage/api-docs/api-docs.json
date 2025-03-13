@@ -7,9 +7,232 @@
     "servers": [
         {
             "url": "http://127.0.0.1:8000/api/v1"
+        },
+        {
+            "url": "http://127.0.0.1:8000/api/v1"
         }
     ],
     "paths": {
+        "/mileage-trackers": {
+            "get": {
+                "tags": [
+                    "Mileage Trackers"
+                ],
+                "summary": "Get mileage trackers",
+                "operationId": "29749e30bf08318ce8ace2f917051df8",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/MileageTrackerResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Mileage trackers not found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Mileage Trackers"
+                ],
+                "summary": "Create a new mileage tracker",
+                "operationId": "18deedd4927c6855f868da7149bb524d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreMileageTrackerRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Mileage tracker created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MileageTrackerResource"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/mileage-trackers/get-paginated": {
+            "get": {
+                "tags": [
+                    "Mileage Trackers"
+                ],
+                "summary": "Get paginated mileage trackers",
+                "operationId": "0adf92e269ad684a9a9661b48fe03e8d",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": 20
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MileageTrackerPaginatedCollection"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Mileage trackers not found"
+                    }
+                }
+            }
+        },
+        "/mileage-trackers/{id}": {
+            "get": {
+                "tags": [
+                    "Mileage Trackers"
+                ],
+                "summary": "Get mileage tracker",
+                "operationId": "defe251ad160903b376556ad67654be2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the mileage tracker to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MileageTrackerResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Mileage tracker not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Mileage Trackers"
+                ],
+                "summary": "Update a mileage tracker",
+                "operationId": "fe36bde11ccbd69086a3da1a66f357b1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the mileage tracker to update",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateMileageTrackerRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Mileage tracker updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MileageTrackerResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Mileage tracker not found"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Mileage Trackers"
+                ],
+                "summary": "Delete a mileage tracker",
+                "operationId": "22ab0867e5b1442bd2352a33e3ef9d13",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the mileage tracker to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Mileage tracker deleted successfully"
+                    },
+                    "404": {
+                        "description": "Mileage tracker not found"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
         "/users": {
             "get": {
                 "tags": [
@@ -233,6 +456,32 @@
     },
     "components": {
         "schemas": {
+            "StoreMileageTrackerRequest": {
+                "title": "MileageTracker Create Request",
+                "required": [
+                    "serialNo"
+                ],
+                "properties": {
+                    "serialNo": {
+                        "type": "string",
+                        "example": "SE123123123"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateMileageTrackerRequest": {
+                "title": "MileageTracker Update Request",
+                "required": [
+                    "serialNo"
+                ],
+                "properties": {
+                    "serialNo": {
+                        "type": "string",
+                        "example": "SE123123123"
+                    }
+                },
+                "type": "object"
+            },
             "StoreUserRequest": {
                 "title": "User Create Request",
                 "required": [
@@ -270,6 +519,46 @@
                     "email": {
                         "type": "string",
                         "example": "samantha@example.com"
+                    }
+                },
+                "type": "object"
+            },
+            "MileageTrackerPaginatedCollection": {
+                "title": "MileageTracker Paginated Collection",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MileageTrackerResource"
+                        }
+                    },
+                    "total": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 20
+                    }
+                },
+                "type": "object"
+            },
+            "MileageTrackerResource": {
+                "title": "MileageTracker Resource",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": "1"
+                    },
+                    "serialNo": {
+                        "type": "string",
+                        "example": "SE123123123"
+                    },
+                    "publicKey": {
+                        "type": "string",
+                        "example": "99882233-334455"
+                    },
+                    "privateKey": {
+                        "type": "string",
+                        "example": "7788-334433"
                     }
                 },
                 "type": "object"
@@ -313,6 +602,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Mileage Trackers",
+            "description": "Mileage Trackers"
+        },
         {
             "name": "Users",
             "description": "Users"

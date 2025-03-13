@@ -19,18 +19,18 @@ use Illuminate\Support\Collection;
 
 interface UserRepositoryInterface
 {
-  public function getAll(): Collection;
+	public function getAll(): Collection;
 
-  public function getPaginated(PaginatedUserRequest $request): array;
-  
-  public function getById(int $id): User;
-  
-  public function create(StoreUserRequest $request): User;
-  
-  public function update(
-    int $id,
-    UpdateUserRequest $request
-  ): User;
-  
-  public function delete(int $id): bool;
+	public function getPaginated(PaginatedUserRequest $request): array;
+
+	public function getById(int $id): User;
+
+	public function create(StoreUserRequest $request): User;
+
+	public function update(
+		int $id,
+		UpdateUserRequest $request
+	): User;
+
+	public function delete(int $id): bool;
 }

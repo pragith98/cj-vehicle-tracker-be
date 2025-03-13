@@ -19,10 +19,7 @@ class MileageTracker extends Model
     protected $table = 'mileage_trackers';
 
     protected $fillable = [
-        'serial_no',
-        'status',
-        'created_by',
-        'updated_by'
+        'serial_no'
     ];
 
     public $timestamps = true;

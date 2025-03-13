@@ -24,7 +24,7 @@ return new class extends Migration
         Schema::create('mileage_trackers', function (Blueprint $table) {
             $table->id();
             $table->string('serial_no', 255);
-            $table->string('public_key', 255);
+            $table->string('public_key', 255)->nullable();
             $table->enum('status', MileageTrackerStatus::getValues())
                 ->default(MileageTrackerStatus::AVAILABLE->value);
             $table->timestamp('created_at')->nullable();
