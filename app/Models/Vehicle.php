@@ -15,5 +15,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Vehicle extends Model
 {
-    //
+    protected $table = 'vehicles';
+
+    protected $fillable = [
+        'mileage_tracker_id',
+        'vehicle_no',
+        'chassis_no',
+        'current_mileage'
+    ];
 }
