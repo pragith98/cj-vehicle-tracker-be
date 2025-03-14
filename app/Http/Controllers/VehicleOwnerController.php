@@ -209,9 +209,9 @@ class VehicleOwnerController extends Controller
     ) {
         $id = (int) $id;
         try {
-            $vehicle = $this->repository->update($id, 
-                                                 $request);
-            return new VehicleOwnerResource($vehicle);
+            $vehicleOwner = $this->repository->update($id, 
+                                                      $request);
+            return new VehicleOwnerResource($vehicleOwner);
         } catch (Exception $e) {
             return ApiResponse::error($e->getMessage(), 404);
         }
