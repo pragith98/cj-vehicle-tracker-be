@@ -11,9 +11,21 @@
 
 namespace App\Models;
 
+use App\Enums\Salutation;
 use Illuminate\Database\Eloquent\Model;
 
 class VehicleOwner extends Model
 {
-    //
+    protected $table = 'vehicle_owners';
+
+    protected $fillable = [
+        'NIC',
+        'telephone_no',
+        'salutation',
+        'name'
+    ];
+
+    protected $casts = [
+        'salutation' => Salutation::class
+    ];
 }
