@@ -13,6 +13,9 @@
         },
         {
             "url": "http://127.0.0.1:8000/api/v1"
+        },
+        {
+            "url": "http://127.0.0.1:8000/api/v1"
         }
     ],
     "paths": {
@@ -713,6 +716,226 @@
                     }
                 }
             }
+        },
+        "/vehicle-owners": {
+            "get": {
+                "tags": [
+                    "Vehicle Owners"
+                ],
+                "summary": "Get vehicle owners",
+                "operationId": "304984422b7e004110115e9c89139f46",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/VehicleOwnerResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Vehicle owners not found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Vehicle Owners"
+                ],
+                "summary": "Create a new vehicle owner",
+                "operationId": "bc2b4eb2f6379976ca9439fcdecc794c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreVehicleOwnerRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Vehicle owner created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VehicleOwnerResource"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/vehicle-owners/get-paginated": {
+            "get": {
+                "tags": [
+                    "Vehicle Owners"
+                ],
+                "summary": "Get paginated vehicle owners",
+                "operationId": "9995c596d5de76f544fedc366e7d4319",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": 20
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VehicleOwnerPaginatedCollection"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Vehicle owner not found"
+                    }
+                }
+            }
+        },
+        "/vehicle-owners/{id}": {
+            "get": {
+                "tags": [
+                    "Vehicle Owners"
+                ],
+                "summary": "Get vehicle owner",
+                "operationId": "3aa48f3e4dd090df35623b39ffe2ea4b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the vehicle owner to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VehicleOwnerResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Vehicle owner not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Vehicle Owners"
+                ],
+                "summary": "Update a vehicle owner",
+                "operationId": "13c6d55dc70bd34867606f993f70a2f5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the vehicle owner to update",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateVehicleOwnerRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Vehicle owner updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VehicleOwnerResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Vehicle owner not found"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Vehicle Owners"
+                ],
+                "summary": "Delete a vehicle owner",
+                "operationId": "bc969df11ec9cac6c4e6335939570620",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the vehicle owner to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Vehicle owner deleted successfully"
+                    },
+                    "404": {
+                        "description": "Vehicle owner not found"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -840,6 +1063,62 @@
                 },
                 "type": "object"
             },
+            "StoreVehicleOwnerRequest": {
+                "title": "Vehicle Owner Create Request",
+                "required": [
+                    "NIC",
+                    "telephoneNo",
+                    "salutation",
+                    "name"
+                ],
+                "properties": {
+                    "NIC": {
+                        "type": "string",
+                        "example": "772345598V"
+                    },
+                    "telephoneNo": {
+                        "type": "string",
+                        "example": "0711212121"
+                    },
+                    "salutation": {
+                        "type": "string",
+                        "example": "MR"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Nishantha"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateVehicleOwnerRequest": {
+                "title": "Vehicle Owner Update Request",
+                "required": [
+                    "NIC",
+                    "telephoneNo",
+                    "salutation",
+                    "name"
+                ],
+                "properties": {
+                    "NIC": {
+                        "type": "string",
+                        "example": "772345598V"
+                    },
+                    "telephoneNo": {
+                        "type": "string",
+                        "example": "0711212121"
+                    },
+                    "salutation": {
+                        "type": "string",
+                        "example": "MR"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Nishantha"
+                    }
+                },
+                "type": "object"
+            },
             "MileageTrackerPaginatedCollection": {
                 "title": "MileageTracker Paginated Collection",
                 "properties": {
@@ -916,6 +1195,50 @@
                 },
                 "type": "object"
             },
+            "VehicleOwnerPaginatedCollection": {
+                "title": "Vehicle Owner Paginated Collection",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/VehicleOwnerResource"
+                        }
+                    },
+                    "total": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 20
+                    }
+                },
+                "type": "object"
+            },
+            "VehicleOwnerResource": {
+                "title": "Vehicle Owner Resource",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": "1"
+                    },
+                    "NIC": {
+                        "type": "string",
+                        "example": "772345598V"
+                    },
+                    "telephoneNo": {
+                        "type": "string",
+                        "example": "0711212121"
+                    },
+                    "salutation": {
+                        "type": "string",
+                        "example": "MR"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Nishantha"
+                    }
+                },
+                "type": "object"
+            },
             "VehiclePaginatedCollection": {
                 "title": "Vehicle Paginated Collection",
                 "properties": {
@@ -974,6 +1297,10 @@
         {
             "name": "Vehicles",
             "description": "Vehicles"
+        },
+        {
+            "name": "Vehicle Owners",
+            "description": "Vehicle Owners"
         }
     ]
 }
