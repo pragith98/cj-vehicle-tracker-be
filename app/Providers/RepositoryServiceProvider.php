@@ -12,11 +12,13 @@
 
 namespace App\Providers;
 
+use App\Repositories\Interfaces\MileageHistoryRepositoryInterface;
 use App\Repositories\Interfaces\MileageTrackerRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Repositories\Interfaces\VehicleOwnerRepositoryInterface;
 use App\Repositories\Interfaces\VehicleOwnershipRepositoryInterface;
 use App\Repositories\Interfaces\VehicleRepositoryInterface;
+use App\Repositories\MileageHistoryRepository;
 use App\Repositories\MileageTrackerRepository;
 use App\Repositories\UserRepository;
 use App\Repositories\VehicleOwnerRepository;
@@ -36,6 +38,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(VehicleRepositoryInterface::class, VehicleRepository::class);
         $this->app->bind(VehicleOwnerRepositoryInterface::class, VehicleOwnerRepository::class);
         $this->app->bind(VehicleOwnershipRepositoryInterface::class, VehicleOwnershipRepository::class);
+        $this->app->bind(MileageHistoryRepositoryInterface::class, MileageHistoryRepository::class);
     }
 
     /**

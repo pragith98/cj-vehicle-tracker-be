@@ -22,6 +22,7 @@ return new class extends Migration
     {
         Schema::create('mileage_histories', function (Blueprint $table) {
             $table->unsignedBigInteger('vehicle_id');
+            $table->double('mileage')->default(0);
             $table->timestamp('created_at')->useCurrent();
             $table->primary(['vehicle_id', 'created_at']);
 

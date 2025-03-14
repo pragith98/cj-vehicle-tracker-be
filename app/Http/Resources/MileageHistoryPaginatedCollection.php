@@ -16,18 +16,18 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 /**
  * @OA\Schema(
- *     schema="MileageTrackerPaginatedCollection",
+ *     schema="MileageHistoryPaginatedCollection",
  *     type="object",
- *     title="Mileage Tracker Paginated Collection",
+ *     title="Mileage History Paginated Collection",
  *     @OA\Property(
  *          property="data", 
  *          type="array", 
- *          @OA\Items(ref="#/components/schemas/MileageTrackerResource")
+ *          @OA\Items(ref="#/components/schemas/MileageHistoryResource")
  *     ),
  *     @OA\Property(property="total", type="integer", format="int64", example=20),
  * )
  */
-class MileageTrackerPaginatedCollection extends ResourceCollection
+class MileageHistoryPaginatedCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -37,7 +37,7 @@ class MileageTrackerPaginatedCollection extends ResourceCollection
     public function toArray(Request $request): array
     {
         return [
-            'data' => MileageTrackerResource::collection($this->collection['data']),
+            'data' => MileageHistoryResource::collection($this->collection['data']),
             'total' => $this->collection['total']
         ];
     }

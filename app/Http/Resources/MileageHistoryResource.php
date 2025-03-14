@@ -16,16 +16,15 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
  * @OA\Schema(
- *     schema="MileageTrackerResource",
+ *     schema="MileageHistoryResource",
  *     type="object",
- *     title="Mileage Tracker Resource",
- *     @OA\Property(property="id", type="integer", format="int64", example="1"),
- *     @OA\Property(property="serialNo", type="string", example="SE123123123"),
- *     @OA\Property(property="publicKey", type="string", example="99882233-334455"),
- *     @OA\Property(property="privateKey", type="string", example="7788-334433"),
+ *     title="Mileage History Resource",
+ *     @OA\Property(property="vehicleId", type="integer", format="int64", example="1"),
+ *     @OA\Property(property="mileage", type="double", example="10"),
+ *     @OA\Property(property="createdAt", type="string", example="2025-03-14T22:22:39.000000Z"),
  * )
  */
-class MileageTrackerResource extends JsonResource
+class MileageHistoryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -35,11 +34,9 @@ class MileageTrackerResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'serialNo' => $this->serial_no,
-            'publicKey' => $this->public_key,
-            'privateKey' => $this->private_key,
-            'status' => $this->status->name
+            'vehicleId' => $this->vehicle_id,
+            'mileage' => $this->mileage,
+            'createdAt' => $this->created_at->format('Y-m-d H:i:s')
         ];
     }
 
