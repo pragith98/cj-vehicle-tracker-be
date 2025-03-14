@@ -12,4 +12,5 @@ Route::prefix('v1')->group(function () {
     require base_path('routes/api/v1/mileageTrackers.php');
     require base_path('routes/api/v1/vehicles.php');
     require base_path('routes/api/v1/vehicleOwners.php');
+    require base_path('routes/api/v1/vehicleOwnerships.php');
 });

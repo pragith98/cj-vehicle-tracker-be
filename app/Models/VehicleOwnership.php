@@ -15,5 +15,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class VehicleOwnership extends Model
 {
-    //
+    protected $table = 'vehicle_ownerships';
+
+    protected $primaryKey = null;
+
+    public $incrementing = false;
+
+    protected $fillable = [
+        'vehicle_id',
+        'vehicle_owner_id',
+        'start_date',
+        'end_date'
+    ];
 }
