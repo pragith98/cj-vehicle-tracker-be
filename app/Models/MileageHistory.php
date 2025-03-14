@@ -15,5 +15,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class MileageHistory extends Model
 {
-    //
+    protected $table = 'mileage_histories';
+
+    protected $primaryKey = null;
+
+    public $incrementing = false;
+
+    const UPDATED_AT = null;
+
+    protected $fillable = [
+        'vehicle_id',
+        'mileage'
+    ];
 }

@@ -19,9 +19,163 @@
         },
         {
             "url": "http://127.0.0.1:8000/api/v1"
+        },
+        {
+            "url": "http://127.0.0.1:8000/api/v1"
         }
     ],
     "paths": {
+        "/mileage-histories": {
+            "get": {
+                "tags": [
+                    "Mileage Histories"
+                ],
+                "summary": "Get mileage histories",
+                "operationId": "dbd66902a56f8e6a70a620819e822602",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/MileageHistoryResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Mileage history not found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Mileage Histories"
+                ],
+                "summary": "Create a new mileage history",
+                "operationId": "1907176ed08ec7ccb3885d46433b74f0",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreMileageHistoryRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Mileage history created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MileageHistoryResource"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/mileage-histories/get-paginated": {
+            "get": {
+                "tags": [
+                    "Mileage Histories"
+                ],
+                "summary": "Get paginated mileage histories",
+                "operationId": "090b2fbd8c00988153894c30af3933b5",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": 20
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MileageHistoryPaginatedCollection"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Mileage history not found"
+                    }
+                }
+            }
+        },
+        "/mileage-histories/{vehicleId}/{createdAt}": {
+            "delete": {
+                "tags": [
+                    "Mileage Histories"
+                ],
+                "summary": "Delete a mileage history",
+                "operationId": "2f048ea554bc04131ca47e66e661e43a",
+                "parameters": [
+                    {
+                        "name": "vehicleId",
+                        "in": "path",
+                        "description": "ID of the vehicle",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "createdAt",
+                        "in": "path",
+                        "description": "Created date time of mileage history",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Mileage history deleted successfully"
+                    },
+                    "404": {
+                        "description": "Mileage history not found"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
         "/mileage-trackers": {
             "get": {
                 "tags": [
@@ -1220,6 +1374,25 @@
     },
     "components": {
         "schemas": {
+            "StoreMileageHistoryRequest": {
+                "title": "Mileage History Create Request",
+                "required": [
+                    "vehicleId",
+                    "mileage"
+                ],
+                "properties": {
+                    "vehicleId": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "mileage": {
+                        "type": "number",
+                        "format": "double",
+                        "example": "10"
+                    }
+                },
+                "type": "object"
+            },
             "StoreMileageTrackerRequest": {
                 "title": "MileageTracker Create Request",
                 "required": [
@@ -1449,8 +1622,45 @@
                 },
                 "type": "object"
             },
+            "MileageHistoryPaginatedCollection": {
+                "title": "Mileage History Paginated Collection",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MileageHistoryResource"
+                        }
+                    },
+                    "total": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 20
+                    }
+                },
+                "type": "object"
+            },
+            "MileageHistoryResource": {
+                "title": "Mileage History Resource",
+                "properties": {
+                    "vehicleId": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": "1"
+                    },
+                    "mileage": {
+                        "type": "number",
+                        "format": "double",
+                        "example": "10"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "example": "2024-03-05"
+                    }
+                },
+                "type": "object"
+            },
             "MileageTrackerPaginatedCollection": {
-                "title": "MileageTracker Paginated Collection",
+                "title": "Mileage Tracker Paginated Collection",
                 "properties": {
                     "data": {
                         "type": "array",
@@ -1467,7 +1677,7 @@
                 "type": "object"
             },
             "MileageTrackerResource": {
-                "title": "MileageTracker Resource",
+                "title": "Mileage Tracker Resource",
                 "properties": {
                     "id": {
                         "type": "integer",
@@ -1655,6 +1865,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Mileage Histories",
+            "description": "Mileage Histories"
+        },
         {
             "name": "Mileage Trackers",
             "description": "Mileage Trackers"
