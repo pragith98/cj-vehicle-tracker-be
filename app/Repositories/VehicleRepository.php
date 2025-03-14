@@ -119,4 +119,23 @@ class VehicleRepository implements VehicleRepositoryInterface
             throw new Exception("Failed to delete vehicle.", 500);
         }
     }
+
+    public function updateMileage(
+        int $vehicleId, 
+        int $mileage
+    ): void {
+        try {
+            $vehicle = $this->vehicle->find($vehicleId);
+            if (!$vehicle) {
+                throw new Exception("Vehicle not found.", 404);
+            }
+
+            $newMileage = $vehicle->current_mileage + $mileage;
+
+            $vehicle->current_mileage = $newMileage;
+            $vehicle->save();
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
 }

@@ -24,10 +24,14 @@ use Illuminate\Support\Facades\DB;
 class MileageHistoryRepository implements MileageHistoryRepositoryInterface
 {
     protected $mileageHistory;
+    protected $vehicleRepository;
 
-    public function __construct(MileageHistory $mileageHistory)
-    {
+    public function __construct(
+        MileageHistory $mileageHistory,
+        VehicleRepository $vehicleRepository
+    ) {
         $this->mileageHistory = $mileageHistory;
+        $this->vehicleRepository = $vehicleRepository;
     }
 
     public function getAll(): Collection
@@ -60,12 +64,19 @@ class MileageHistoryRepository implements MileageHistoryRepositoryInterface
         try {
             $validatedData = $request->validated();
 
-            $data = [
-                'vehicle_id' => $validatedData['vehicleId'],
-                'mileage' => $validatedData['mileage']
-            ];
+            return DB::transaction(function () use ($validatedData) {
+                $data = [
+                    'vehicle_id' => $validatedData['vehicleId'],
+                    'mileage' => $validatedData['mileage']
+                ];
 
-            return $this->mileageHistory->create($data);
+                $mileageHistory = $this->mileageHistory->create($data);
+
+                // Update vehicle mileage
+                $this->vehicleRepository->updateMileage($validatedData['vehicleId'],
+                                                        $validatedData['mileage']);
+                return $mileageHistory;
+            });
         } catch (Exception $e) {
             throw new Exception("Failed to create mileage history.", 500);
         }
