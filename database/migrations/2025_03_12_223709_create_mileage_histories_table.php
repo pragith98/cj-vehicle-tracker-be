@@ -26,7 +26,10 @@ return new class extends Migration
             $table->timestamp('created_at')->useCurrent();
             $table->primary(['vehicle_id', 'created_at']);
 
-            $table->foreign('vehicle_id')->references('id')->on('vehicles');
+            $table->foreign('vehicle_id')
+                ->references('id')
+                ->on('vehicles')
+                ->onDelete('cascade');
         });
     }
 
