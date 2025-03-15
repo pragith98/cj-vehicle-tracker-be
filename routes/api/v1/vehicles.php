@@ -19,4 +19,5 @@ Route::prefix('vehicles')->group(function () {
   Route::get('/{id}', [VehicleController::class, 'show']);
   Route::put('/{id}', [VehicleController::class, 'update']);
   Route::delete('/{id}', [VehicleController::class, 'destroy']);
+  Route::get('/{id}/is-deletable', [VehicleController::class, 'isDeletable']);
 });

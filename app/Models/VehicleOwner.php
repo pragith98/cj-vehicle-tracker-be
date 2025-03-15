@@ -28,4 +28,15 @@ class VehicleOwner extends Model
     protected $casts = [
         'salutation' => Salutation::class
     ];
+
+    public function ownerships()
+    {
+        return $this->hasMany(VehicleOwnership::class, 'vehicle_owner_id');
+    }
+
+    public function currentOwnerships()
+    {
+        return $this->hasMany(VehicleOwnership::class, 'vehicle_owner_id')
+            ->whereNull('end_date');
+    }
 }

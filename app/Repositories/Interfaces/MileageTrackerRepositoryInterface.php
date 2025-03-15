@@ -14,6 +14,7 @@ namespace App\Repositories\Interfaces;
 use App\Http\Requests\MileageTracker\PaginatedMileageTrackerRequest;
 use App\Http\Requests\MileageTracker\StoreMileageTrackerRequest;
 use App\Http\Requests\MileageTracker\UpdateMileageTrackerRequest;
+use App\Http\Resources\DeletabilityResource;
 use App\Models\MileageTracker;
 use Illuminate\Support\Collection;
 
@@ -33,6 +34,8 @@ interface MileageTrackerRepositoryInterface
     ): MileageTracker;
 
     public function delete(int $id): bool;
+
+    public function isDeletable(int $id): DeletabilityResource;
 
     public function generateKey(int $id): MileageTracker;
 }

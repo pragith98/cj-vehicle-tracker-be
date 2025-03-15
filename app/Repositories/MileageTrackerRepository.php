@@ -14,6 +14,7 @@ namespace App\Repositories;
 use App\Http\Requests\MileageTracker\PaginatedMileageTrackerRequest;
 use App\Http\Requests\MileageTracker\StoreMileageTrackerRequest;
 use App\Http\Requests\MileageTracker\UpdateMileageTrackerRequest;
+use App\Http\Resources\DeletabilityResource;
 use App\Models\MileageTracker;
 use App\Repositories\Interfaces\MileageTrackerRepositoryInterface;
 use Exception;
@@ -111,6 +112,26 @@ class MileageTrackerRepository implements MileageTrackerRepositoryInterface
             throw new Exception("Mileage tracker with ID {$id} not found.", 404);
         } catch (Exception $e) {
             throw new Exception("Failed to delete mileage tracker.", 500);
+        }
+    }
+
+    public function isDeletable(int $id): DeletabilityResource
+    {
+        $isDeletable = true;
+        $messages = [];
+        try {
+            $vehicle = $this->mileageTracker->with('currentVehicle')->findOrFail($id);
+            if($vehicle->currentVehicle) {
+                $messages[] = "There is a vehicle assigned";
+                $isDeletable = false;
+            }
+
+            return new DeletabilityResource(
+                $isDeletable,
+                $messages
+            );
+        } catch (ModelNotFoundException $e) {
+            throw new Exception("Mileage tracker with ID {$id} not found.", 404);
         }
     }
 

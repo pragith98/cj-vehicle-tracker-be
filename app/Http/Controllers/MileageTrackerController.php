@@ -255,6 +255,42 @@ class MileageTrackerController extends Controller
     }
 
     /**
+     * @OA\Get(
+     *     path="/mileage-trackers/{id}/is-deletable",
+     *     summary="Check mileage trackers delability",
+     *     tags={"Mileage Trackers"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID of the mileage trackers",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             ref="#/components/schemas/DeletabilityResource"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Mileage Tracker not found"
+     *     )
+     * )
+     */
+    public function isDeletable(string $id)
+    {
+        $id = (int) $id;
+        try {
+            return $this->repository->isDeletable($id);
+        } catch (Exception $e) {
+            return ApiResponse::error($e->getMessage(), 404);
+        }
+    }
+
+    /**
      * @OA\Put(
      *     path="/mileage-trackers/{id}/generate-key",
      *     summary="Update a mileage tracker key",

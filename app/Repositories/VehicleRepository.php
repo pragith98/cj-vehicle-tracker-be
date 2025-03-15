@@ -14,6 +14,7 @@ namespace App\Repositories;
 use App\Http\Requests\Vehicle\PaginatedVehicleRequest;
 use App\Http\Requests\Vehicle\StoreVehicleRequest;
 use App\Http\Requests\Vehicle\UpdateVehicleRequest;
+use App\Http\Resources\DeletabilityResource;
 use App\Models\Vehicle;
 use App\Repositories\Interfaces\VehicleRepositoryInterface;
 use Exception;
@@ -120,12 +121,34 @@ class VehicleRepository implements VehicleRepositoryInterface
         }
     }
 
+    public function isDeletable(int $id): DeletabilityResource
+    {
+        $isDeletable = true;
+        $messages = [];
+        try {
+            $ownerships = $this->vehicle->with('ownerships')->findOrFail($id);
+            $ownershipCounts = $ownerships->ownerships->count();
+
+            if($ownershipCounts > 0) {
+                $messages[] = "There is/are {$ownershipCounts} current/previous ownership assigned";
+                $isDeletable = false;
+            }
+
+            return new DeletabilityResource(
+                $isDeletable,
+                $messages
+            );
+        } catch (ModelNotFoundException $e) {
+            throw new Exception("Vehicle with ID {$id} not found.", 404);
+        }
+    }
+
     public function updateMileage(
-        int $vehicleId, 
+        int $id,
         int $mileage
     ): void {
         try {
-            $vehicle = $this->vehicle->find($vehicleId);
+            $vehicle = $this->vehicle->find($id);
             if (!$vehicle) {
                 throw new Exception("Vehicle not found.", 404);
             }

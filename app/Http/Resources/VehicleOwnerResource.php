@@ -23,7 +23,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *     @OA\Property(property="NIC", type="string", example="772345598V"),
  *     @OA\Property(property="telephoneNo", type="string", example="0711212121"),
  *     @OA\Property(property="salutation", type="string", example="MR"),
- *     @OA\Property(property="name", type="string", example="Nishantha")
+ *     @OA\Property(property="name", type="string", example="Nishantha"),
+ *     @OA\Property(property="currentOwnershipsCount", type="integer", example="1")
  * )
  */
 class VehicleOwnerResource extends JsonResource
@@ -40,7 +41,8 @@ class VehicleOwnerResource extends JsonResource
             'NIC' => $this->NIC,
             'telephoneNo' => $this->telephone_no,
             'salutation' => $this->salutation->name,
-            'name' => $this->name
+            'name' => $this->name,
+            'currentOwnershipsCount' => $this->whenLoaded('currentOwnerships')->count()
         ];
     }
 

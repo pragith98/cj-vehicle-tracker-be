@@ -15,6 +15,7 @@ use App\Http\Requests\MileageHistory\PaginatedMileageHistoryRequest;
 use App\Http\Requests\MileageHistory\StoreMileageHistoryRequest;
 use App\Models\MileageHistory;
 use App\Repositories\Interfaces\MileageHistoryRepositoryInterface;
+use App\Repositories\Interfaces\VehicleRepositoryInterface;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -28,7 +29,7 @@ class MileageHistoryRepository implements MileageHistoryRepositoryInterface
 
     public function __construct(
         MileageHistory $mileageHistory,
-        VehicleRepository $vehicleRepository
+        VehicleRepositoryInterface $vehicleRepository
     ) {
         $this->mileageHistory = $mileageHistory;
         $this->vehicleRepository = $vehicleRepository;

@@ -253,4 +253,40 @@ class VehicleOwnerController extends Controller
             return ApiResponse::error($e->getMessage(), 404);
         }
     }
+
+    /**
+     * @OA\Get(
+     *     path="/vehicle-owners/{id}/is-deletable",
+     *     summary="Check vehicle owner delability",
+     *     tags={"Vehicle Owners"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID of the vehicle owner",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             ref="#/components/schemas/DeletabilityResource"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Vehicle owner not found"
+     *     )
+     * )
+     */
+    public function isDeletable(string $id)
+    {
+        $id = (int) $id;
+        try {
+            return $this->repository->isDeletable($id);
+        } catch (Exception $e) {
+            return ApiResponse::error($e->getMessage(), 404);
+        }
+    }
 }
