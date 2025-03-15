@@ -1859,11 +1859,9 @@
                         "type": "string",
                         "example": "Nishantha"
                     },
-                    "currentOwnerships": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/VehicleOwnershipResource"
-                        }
+                    "currentOwnershipsCount": {
+                        "type": "integer",
+                        "example": "1"
                     }
                 },
                 "type": "object"
@@ -1947,12 +1945,6 @@
                     "currentMileage": {
                         "type": "interger",
                         "example": "300"
-                    },
-                    "currentOwnership": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/VehicleOwnershipResource"
-                        }
                     }
                 },
                 "type": "object"

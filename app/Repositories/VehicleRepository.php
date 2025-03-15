@@ -58,7 +58,7 @@ class VehicleRepository implements VehicleRepositoryInterface
     public function getById(int $id): Vehicle
     {
         try {
-            return $this->vehicle->with('currentOwnership')->findOrFail($id);
+            return $this->vehicle->findOrFail($id);
         } catch (ModelNotFoundException $e) {
             throw new Exception("Vehicle with ID {$id} not found.", 404);
         }

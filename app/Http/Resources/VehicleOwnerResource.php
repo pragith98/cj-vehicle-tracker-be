@@ -24,11 +24,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *     @OA\Property(property="telephoneNo", type="string", example="0711212121"),
  *     @OA\Property(property="salutation", type="string", example="MR"),
  *     @OA\Property(property="name", type="string", example="Nishantha"),
- *     @OA\Property(
- *          property="currentOwnerships", 
- *          type="array", 
- *          @OA\Items(ref="#/components/schemas/VehicleOwnershipResource")
- *     )
+ *     @OA\Property(property="currentOwnershipsCount", type="integer", example="1")
  * )
  */
 class VehicleOwnerResource extends JsonResource
@@ -46,8 +42,7 @@ class VehicleOwnerResource extends JsonResource
             'telephoneNo' => $this->telephone_no,
             'salutation' => $this->salutation->name,
             'name' => $this->name,
-            'currentOwnerships' => 
-                VehicleOwnershipResource::collection($this->whenLoaded('currentOwnerships'))
+            'currentOwnershipsCount' => $this->whenLoaded('currentOwnerships')->count()
         ];
     }
 

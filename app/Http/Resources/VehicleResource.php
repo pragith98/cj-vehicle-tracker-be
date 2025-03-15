@@ -23,12 +23,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *     @OA\Property(property="mileageTrackerId", type="string", example="1"),
  *     @OA\Property(property="vehicleNo", type="string", example="WPAC3434"),
  *     @OA\Property(property="chassisNo", type="string", example="7788-334433"),
- *     @OA\Property(property="currentMileage", type="interger", example="300"),
- *     @OA\Property(
- *          property="currentOwnership", 
- *          type="array", 
- *          @OA\Items(ref="#/components/schemas/VehicleOwnershipResource")
- *     )
+ *     @OA\Property(property="currentMileage", type="interger", example="300")
  * )
  */
 class VehicleResource extends JsonResource
@@ -45,9 +40,7 @@ class VehicleResource extends JsonResource
             'mileageTrackerId' => $this->mileage_tracker_id,
             'vehicleNo' => $this->vehicle_no,
             'chassisNo' => $this->chassis_no,
-            'currentMileage' => $this->current_mileage,
-            'currentOwnership' => 
-                new VehicleOwnershipResource($this->whenLoaded('currentOwnership'))
+            'currentMileage' => $this->current_mileage
         ];
     }
 
