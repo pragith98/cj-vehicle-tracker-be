@@ -14,6 +14,7 @@ namespace App\Repositories\Interfaces;
 use App\Http\Requests\VehicleOwner\UpdateVehicleOwnerRequest;
 use App\Http\Requests\VehicleOwner\PaginatedVehicleOwnerRequest;
 use App\Http\Requests\VehicleOwner\StoreVehicleOwnerRequest;
+use App\Http\Resources\DeletabilityResource;
 use App\Models\VehicleOwner;
 use Illuminate\Support\Collection;
 
@@ -31,6 +32,8 @@ interface VehicleOwnerRepositoryInterface
         int $id,
         UpdateVehicleOwnerRequest $request
     ): VehicleOwner;
+
+    public function isDeletable(int $id): DeletabilityResource;
 
     public function delete(int $id): bool;
 }

@@ -126,7 +126,7 @@ class VehicleRepository implements VehicleRepositoryInterface
         $isDeletable = true;
         $messages = [];
         try {
-            $ownerships = Vehicle::with('ownerships')->findOrFail($id);
+            $ownerships = $this->vehicle->with('ownerships')->findOrFail($id);
             $ownershipCounts = $ownerships->ownerships->count();
 
             if($ownershipCounts > 0) {

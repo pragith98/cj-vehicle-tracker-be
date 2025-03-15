@@ -14,6 +14,7 @@ namespace App\Repositories;
 use App\Http\Requests\VehicleOwner\UpdateVehicleOwnerRequest;
 use App\Http\Requests\VehicleOwner\PaginatedVehicleOwnerRequest;
 use App\Http\Requests\VehicleOwner\StoreVehicleOwnerRequest;
+use App\Http\Resources\DeletabilityResource;
 use App\Models\VehicleOwner;
 use App\Repositories\Interfaces\VehicleOwnerRepositoryInterface;
 use Exception;
@@ -57,7 +58,7 @@ class VehicleOwnerRepository implements VehicleOwnerRepositoryInterface
     public function getById(int $id): VehicleOwner
     {
         try {
-            return $this->vehicleOwner->findOrFail($id);
+            return $this->vehicleOwner->with('currentOwnerships')->findOrFail($id);
         } catch (ModelNotFoundException $e) {
             throw new Exception("Vehicle owner with ID {$id} not found.", 404);
         }
@@ -117,6 +118,28 @@ class VehicleOwnerRepository implements VehicleOwnerRepositoryInterface
             throw new Exception("Vehicle owner with ID {$id} not found.", 404);
         } catch (Exception $e) {
             throw new Exception("Failed to delete vehicle owner.", 500);
+        }
+    }
+
+    public function isDeletable(int $id): DeletabilityResource
+    {
+        $isDeletable = true;
+        $messages = [];
+        try {
+            $ownerships = $this->vehicleOwner->with('ownerships')->findOrFail($id);
+            $ownershipCounts = $ownerships->ownerships->count();
+
+            if($ownershipCounts > 0) {
+                $messages[] = "There is/are {$ownershipCounts} current/previous ownership assigned";
+                $isDeletable = false;
+            }
+
+            return new DeletabilityResource(
+                $isDeletable,
+                $messages
+            );
+        } catch (ModelNotFoundException $e) {
+            throw new Exception("Vehicle owner with ID {$id} not found.", 404);
         }
     }
 }

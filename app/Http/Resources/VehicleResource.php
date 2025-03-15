@@ -46,7 +46,8 @@ class VehicleResource extends JsonResource
             'vehicleNo' => $this->vehicle_no,
             'chassisNo' => $this->chassis_no,
             'currentMileage' => $this->current_mileage,
-            'currentOwnership' => new VehicleOwnershipResource($this->whenLoaded('currentOwnership'))
+            'currentOwnership' => 
+                new VehicleOwnershipResource($this->whenLoaded('currentOwnership'))
         ];
     }
 
