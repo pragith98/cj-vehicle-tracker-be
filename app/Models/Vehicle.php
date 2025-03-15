@@ -23,4 +23,15 @@ class Vehicle extends Model
         'chassis_no',
         'current_mileage'
     ];
+
+    public function ownerships()
+    {
+        return $this->hasMany(VehicleOwnership::class, 'vehicle_id');
+    }
+
+    public function currentOwnership()
+    {
+        return $this->hasOne(VehicleOwnership::class, 'vehicle_id')
+            ->whereNull('end_date');
+    }
 }

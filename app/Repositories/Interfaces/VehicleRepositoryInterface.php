@@ -14,6 +14,7 @@ namespace App\Repositories\Interfaces;
 use App\Http\Requests\Vehicle\PaginatedVehicleRequest;
 use App\Http\Requests\Vehicle\StoreVehicleRequest;
 use App\Http\Requests\Vehicle\UpdateVehicleRequest;
+use App\Http\Resources\DeletabilityResource;
 use App\Models\Vehicle;
 use Illuminate\Support\Collection;
 
@@ -33,4 +34,11 @@ interface VehicleRepositoryInterface
     ): Vehicle;
 
     public function delete(int $id): bool;
+
+    public function isDeletable(int $id): DeletabilityResource;
+
+    public function updateMileage(
+        int $id, 
+        int $mileage
+    ): void;
 }
