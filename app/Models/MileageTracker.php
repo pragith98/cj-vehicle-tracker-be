@@ -27,4 +27,9 @@ class MileageTracker extends Model
     public $casts = [
         'status' => MileageTrackerStatus::class
     ];
+
+    public function currentVehicle()
+    {
+        return $this->hasOne(Vehicle::class, 'mileage_tracker_id');
+    }
 }

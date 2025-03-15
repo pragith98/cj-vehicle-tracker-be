@@ -396,6 +396,41 @@
                 }
             }
         },
+        "/mileage-trackers/{id}/is-deletable": {
+            "get": {
+                "tags": [
+                    "Mileage Trackers"
+                ],
+                "summary": "Check mileage trackers delability",
+                "operationId": "59da494e222c19628bfb6c8213f0a6ce",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the mileage trackers",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DeletabilityResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Mileage Tracker not found"
+                    }
+                }
+            }
+        },
         "/mileage-trackers/{id}/generate-key": {
             "put": {
                 "tags": [
