@@ -10,11 +10,14 @@
 */
 
 use App\Http\Controllers\MileageHistoryController;
+use App\Http\Middleware\AuthenticateWithSanctumCookie;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('mileage-histories')->group(function () {
-  Route::get('/', [MileageHistoryController::class, 'index']);
-  Route::get('/get-paginated', [MileageHistoryController::class, 'getPaginated']);
-  Route::post('/', [MileageHistoryController::class, 'store']);
-  Route::delete('/{vehicleId}/{createdAt}', [MileageHistoryController::class, 'destroy']);
-});
+Route::middleware(AuthenticateWithSanctumCookie::class)
+  ->prefix('mileage-histories')
+  ->group(function () {
+    Route::get('/', [MileageHistoryController::class, 'index']);
+    Route::get('/get-paginated', [MileageHistoryController::class, 'getPaginated']);
+    Route::post('/', [MileageHistoryController::class, 'store']);
+    Route::delete('/{vehicleId}/{createdAt}', [MileageHistoryController::class, 'destroy']);
+  });

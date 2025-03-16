@@ -13,6 +13,7 @@ namespace App\Models;
 
 use App\Enums\MileageTrackerStatus;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class MileageTracker extends Model
 {
@@ -31,5 +32,25 @@ class MileageTracker extends Model
     public function currentVehicle()
     {
         return $this->hasOne(Vehicle::class, 'mileage_tracker_id');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Set created_by and updated_by when creating a new model
+        static::creating(function ($model) {
+            if (Auth::check()) {
+                $model->created_by = Auth::id();
+                $model->updated_by = Auth::id();
+            }
+        });
+
+        // Set updated_by when updating an existing model
+        static::updating(function ($model) {
+            if (Auth::check()) {
+                $model->updated_by = Auth::id();
+            }
+        });
     }
 }

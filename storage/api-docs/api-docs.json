@@ -22,9 +22,50 @@
         },
         {
             "url": "http://127.0.0.1:8000/api/v1"
+        },
+        {
+            "url": "http://127.0.0.1:8000/api/v1"
         }
     ],
     "paths": {
+        "/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login to the system",
+                "operationId": "2dd578ff7aba2721293dac66833b27d1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AuthRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "500": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Logout from the system",
+                "operationId": "68a6108af04af5e3bc1ea68a6c6f1299",
+                "responses": {
+                    "500": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
         "/mileage-histories": {
             "get": {
                 "tags": [
@@ -1479,6 +1520,18 @@
     },
     "components": {
         "schemas": {
+            "AuthRequest": {
+                "title": "Auth Request",
+                "required": [
+                    "username",
+                    "password"
+                ],
+                "properties": {
+                    "username": {},
+                    "password": {}
+                },
+                "type": "object"
+            },
             "StoreMileageHistoryRequest": {
                 "title": "Mileage History Create Request",
                 "required": [
@@ -1987,6 +2040,10 @@
         }
     },
     "tags": [
+        {
+            "name": "Auth",
+            "description": "Auth"
+        },
         {
             "name": "Mileage Histories",
             "description": "Mileage Histories"

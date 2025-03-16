@@ -10,15 +10,18 @@
 */
 
 use App\Http\Controllers\MileageTrackerController;
+use App\Http\Middleware\AuthenticateWithSanctumCookie;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('mileage-trackers')->group(function () {
-  Route::get('/', [MileageTrackerController::class, 'index']);
-  Route::get('/get-paginated', [MileageTrackerController::class, 'getPaginated']);
-  Route::post('/', [MileageTrackerController::class, 'store']);
-  Route::get('/{id}', [MileageTrackerController::class, 'show']);
-  Route::put('/{id}', [MileageTrackerController::class, 'update']);
-  Route::delete('/{id}', [MileageTrackerController::class, 'destroy']);
-  Route::get('/{id}/is-deletable', [MileageTrackerController::class, 'isDeletable']);
-  Route::put('/{id}/generate-key', [MileageTrackerController::class, 'generateKey']);
+Route::middleware(AuthenticateWithSanctumCookie::class)
+  ->prefix('mileage-trackers')
+  ->group(function () {
+    Route::get('/', [MileageTrackerController::class, 'index']);
+    Route::get('/get-paginated', [MileageTrackerController::class, 'getPaginated']);
+    Route::post('/', [MileageTrackerController::class, 'store']);
+    Route::get('/{id}', [MileageTrackerController::class, 'show']);
+    Route::put('/{id}', [MileageTrackerController::class, 'update']);
+    Route::delete('/{id}', [MileageTrackerController::class, 'destroy']);
+    Route::get('/{id}/is-deletable', [MileageTrackerController::class, 'isDeletable']);
+    Route::put('/{id}/generate-key', [MileageTrackerController::class, 'generateKey']);
 });

@@ -12,6 +12,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Vehicle extends Model
 {
@@ -33,5 +34,25 @@ class Vehicle extends Model
     {
         return $this->hasOne(VehicleOwnership::class, 'vehicle_id')
             ->whereNull('end_date');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Set created_by and updated_by when creating a new model
+        static::creating(function ($model) {
+            if (Auth::check()) {
+                $model->created_by = Auth::id();
+                $model->updated_by = Auth::id();
+            }
+        });
+
+        // Set updated_by when updating an existing model
+        static::updating(function ($model) {
+            if (Auth::check()) {
+                $model->updated_by = Auth::id();
+            }
+        });
     }
 }

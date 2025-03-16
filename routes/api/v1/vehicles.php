@@ -10,14 +10,17 @@
 */
 
 use App\Http\Controllers\VehicleController;
+use App\Http\Middleware\AuthenticateWithSanctumCookie;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('vehicles')->group(function () {
-  Route::get('/', [VehicleController::class, 'index']);
-  Route::get('/get-paginated', [VehicleController::class, 'getPaginated']);
-  Route::post('/', [VehicleController::class, 'store']);
-  Route::get('/{id}', [VehicleController::class, 'show']);
-  Route::put('/{id}', [VehicleController::class, 'update']);
-  Route::delete('/{id}', [VehicleController::class, 'destroy']);
-  Route::get('/{id}/is-deletable', [VehicleController::class, 'isDeletable']);
+Route::middleware(AuthenticateWithSanctumCookie::class)
+  ->prefix('vehicles')
+  ->group(function () {
+    Route::get('/', [VehicleController::class, 'index']);
+    Route::get('/get-paginated', [VehicleController::class, 'getPaginated']);
+    Route::post('/', [VehicleController::class, 'store']);
+    Route::get('/{id}', [VehicleController::class, 'show']);
+    Route::put('/{id}', [VehicleController::class, 'update']);
+    Route::delete('/{id}', [VehicleController::class, 'destroy']);
+    Route::get('/{id}/is-deletable', [VehicleController::class, 'isDeletable']);
 });

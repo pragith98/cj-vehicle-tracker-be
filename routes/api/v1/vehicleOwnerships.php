@@ -10,13 +10,16 @@
 */
 
 use App\Http\Controllers\VehicleOwnershipController;
+use App\Http\Middleware\AuthenticateWithSanctumCookie;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('vehicle-ownerships')->group(function () {
-  Route::get('/', [VehicleOwnershipController::class, 'index']);
-  Route::get('/get-paginated', [VehicleOwnershipController::class, 'getPaginated']);
-  Route::post('/', [VehicleOwnershipController::class, 'store']);
-  Route::get('/{vehicleId}/{ownerId}/{startDate}', [VehicleOwnershipController::class, 'show']);
-  Route::put('/{vehicleId}/{ownerId}/{startDate}', [VehicleOwnershipController::class, 'update']);
-  Route::delete('/{vehicleId}/{ownerId}/{startDate}', [VehicleOwnershipController::class, 'destroy']);
+Route::middleware(AuthenticateWithSanctumCookie::class)
+  ->prefix('vehicle-ownerships')
+  ->group(function () {
+    Route::get('/', [VehicleOwnershipController::class, 'index']);
+    Route::get('/get-paginated', [VehicleOwnershipController::class, 'getPaginated']);
+    Route::post('/', [VehicleOwnershipController::class, 'store']);
+    Route::get('/{vehicleId}/{ownerId}/{startDate}', [VehicleOwnershipController::class, 'show']);
+    Route::put('/{vehicleId}/{ownerId}/{startDate}', [VehicleOwnershipController::class, 'update']);
+    Route::delete('/{vehicleId}/{ownerId}/{startDate}', [VehicleOwnershipController::class, 'destroy']);
 });
