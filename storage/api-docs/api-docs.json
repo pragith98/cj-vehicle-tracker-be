@@ -1,0 +1,2072 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "CJ Vehicle Tracker API",
+        "version": "1"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000/api/v1"
+        },
+        {
+            "url": "http://127.0.0.1:8000/api/v1"
+        },
+        {
+            "url": "http://127.0.0.1:8000/api/v1"
+        },
+        {
+            "url": "http://127.0.0.1:8000/api/v1"
+        },
+        {
+            "url": "http://127.0.0.1:8000/api/v1"
+        },
+        {
+            "url": "http://127.0.0.1:8000/api/v1"
+        },
+        {
+            "url": "http://127.0.0.1:8000/api/v1"
+        }
+    ],
+    "paths": {
+        "/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login to the system",
+                "operationId": "2dd578ff7aba2721293dac66833b27d1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AuthRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "500": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Logout from the system",
+                "operationId": "68a6108af04af5e3bc1ea68a6c6f1299",
+                "responses": {
+                    "500": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/mileage-histories": {
+            "get": {
+                "tags": [
+                    "Mileage Histories"
+                ],
+                "summary": "Get mileage histories",
+                "operationId": "dbd66902a56f8e6a70a620819e822602",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/MileageHistoryResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Mileage history not found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Mileage Histories"
+                ],
+                "summary": "Create a new mileage history",
+                "operationId": "1907176ed08ec7ccb3885d46433b74f0",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreMileageHistoryRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Mileage history created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MileageHistoryResource"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/mileage-histories/get-paginated": {
+            "get": {
+                "tags": [
+                    "Mileage Histories"
+                ],
+                "summary": "Get paginated mileage histories",
+                "operationId": "090b2fbd8c00988153894c30af3933b5",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": 20
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MileageHistoryPaginatedCollection"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Mileage history not found"
+                    }
+                }
+            }
+        },
+        "/mileage-histories/{vehicleId}/{createdAt}": {
+            "delete": {
+                "tags": [
+                    "Mileage Histories"
+                ],
+                "summary": "Delete a mileage history",
+                "operationId": "2f048ea554bc04131ca47e66e661e43a",
+                "parameters": [
+                    {
+                        "name": "vehicleId",
+                        "in": "path",
+                        "description": "ID of the vehicle",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "createdAt",
+                        "in": "path",
+                        "description": "Created date time of mileage history",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Mileage history deleted successfully"
+                    },
+                    "404": {
+                        "description": "Mileage history not found"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/mileage-trackers": {
+            "get": {
+                "tags": [
+                    "Mileage Trackers"
+                ],
+                "summary": "Get mileage trackers",
+                "operationId": "29749e30bf08318ce8ace2f917051df8",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/MileageTrackerResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Mileage trackers not found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Mileage Trackers"
+                ],
+                "summary": "Create a new mileage tracker",
+                "operationId": "18deedd4927c6855f868da7149bb524d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreMileageTrackerRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Mileage tracker created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MileageTrackerResource"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/mileage-trackers/get-paginated": {
+            "get": {
+                "tags": [
+                    "Mileage Trackers"
+                ],
+                "summary": "Get paginated mileage trackers",
+                "operationId": "0adf92e269ad684a9a9661b48fe03e8d",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": 20
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MileageTrackerPaginatedCollection"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Mileage trackers not found"
+                    }
+                }
+            }
+        },
+        "/mileage-trackers/{id}": {
+            "get": {
+                "tags": [
+                    "Mileage Trackers"
+                ],
+                "summary": "Get mileage tracker",
+                "operationId": "defe251ad160903b376556ad67654be2",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the mileage tracker to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MileageTrackerResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Mileage tracker not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Mileage Trackers"
+                ],
+                "summary": "Update a mileage tracker",
+                "operationId": "fe36bde11ccbd69086a3da1a66f357b1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the mileage tracker to update",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateMileageTrackerRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Mileage tracker updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MileageTrackerResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Mileage tracker not found"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Mileage Trackers"
+                ],
+                "summary": "Delete a mileage tracker",
+                "operationId": "22ab0867e5b1442bd2352a33e3ef9d13",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the mileage tracker to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Mileage tracker deleted successfully"
+                    },
+                    "404": {
+                        "description": "Mileage tracker not found"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/mileage-trackers/{id}/is-deletable": {
+            "get": {
+                "tags": [
+                    "Mileage Trackers"
+                ],
+                "summary": "Check mileage trackers delability",
+                "operationId": "59da494e222c19628bfb6c8213f0a6ce",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the mileage trackers",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DeletabilityResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Mileage Tracker not found"
+                    }
+                }
+            }
+        },
+        "/mileage-trackers/{id}/generate-key": {
+            "put": {
+                "tags": [
+                    "Mileage Trackers"
+                ],
+                "summary": "Update a mileage tracker key",
+                "operationId": "990b1cfdd5db6d2c6d5b56cb00016ae3",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the mileage tracker to update key",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Mileage tracker key updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MileageTrackerResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Mileage tracker not found"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get users",
+                "operationId": "7e2f5799553ec93c9c43e2a58490d447",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/UserResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Users not found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Create a new user",
+                "operationId": "a1fce870c566eb5fc0cf3178ec5d2fed",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreUserRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserResource"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/users/get-paginated": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get paginated users",
+                "operationId": "7fc116d120445eab23dd6493fdc704de",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": 20
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserPaginatedCollection"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Users not found"
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get user",
+                "operationId": "910a0c7cf580e1c605648d82a4e57f46",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the user to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update a user",
+                "operationId": "ddfe232db1870b82493bf8bd25596d37",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the user to update",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateUserRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Delete a user",
+                "operationId": "43dd20becb1f47444e484cbb18ce345c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the user to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User deleted successfully"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/vehicles": {
+            "get": {
+                "tags": [
+                    "Vehicles"
+                ],
+                "summary": "Get vehicles",
+                "operationId": "d17171521b86a0b324bfa4d4f6ca1f8a",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/VehicleResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Vehicles not found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Vehicles"
+                ],
+                "summary": "Create a new vehicle",
+                "operationId": "e19336f3d4ff20d9858a84d5113213bc",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreVehicleRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Vehicle created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VehicleResource"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/vehicles/get-paginated": {
+            "get": {
+                "tags": [
+                    "Vehicles"
+                ],
+                "summary": "Get paginated vehicles",
+                "operationId": "035a1a8caef2fd1ec9c640a247b3237f",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": 20
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VehiclePaginatedCollection"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Vehicles not found"
+                    }
+                }
+            }
+        },
+        "/vehicles/{id}": {
+            "get": {
+                "tags": [
+                    "Vehicles"
+                ],
+                "summary": "Get vehicle",
+                "operationId": "10887c4dacfad2ebc95acc8bcf1b7188",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the vehicle to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VehicleResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Vehicle not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Vehicles"
+                ],
+                "summary": "Update a vehicle",
+                "operationId": "5a154eaaf029bc3a95ff0cac19946fc9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the vehicle to update",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateVehicleRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Vehicle updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VehicleResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Vehicle not found"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Vehicles"
+                ],
+                "summary": "Delete a vehicle",
+                "operationId": "6c00c88c53d96dd1f08e69ba6d6484a1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the vehicle to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Vehicle deleted successfully"
+                    },
+                    "404": {
+                        "description": "Vehicle not found"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/vehicles/{id}/is-deletable": {
+            "get": {
+                "tags": [
+                    "Vehicles"
+                ],
+                "summary": "Check vehicle delability",
+                "operationId": "bed188b75f3fa836d190219e89265c83",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the vehicle",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DeletabilityResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Vehicle not found"
+                    }
+                }
+            }
+        },
+        "/vehicle-owners": {
+            "get": {
+                "tags": [
+                    "Vehicle Owners"
+                ],
+                "summary": "Get vehicle owners",
+                "operationId": "304984422b7e004110115e9c89139f46",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/VehicleOwnerResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Vehicle owners not found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Vehicle Owners"
+                ],
+                "summary": "Create a new vehicle owner",
+                "operationId": "bc2b4eb2f6379976ca9439fcdecc794c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreVehicleOwnerRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Vehicle owner created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VehicleOwnerResource"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/vehicle-owners/get-paginated": {
+            "get": {
+                "tags": [
+                    "Vehicle Owners"
+                ],
+                "summary": "Get paginated vehicle owners",
+                "operationId": "9995c596d5de76f544fedc366e7d4319",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": 20
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VehicleOwnerPaginatedCollection"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Vehicle owner not found"
+                    }
+                }
+            }
+        },
+        "/vehicle-owners/{id}": {
+            "get": {
+                "tags": [
+                    "Vehicle Owners"
+                ],
+                "summary": "Get vehicle owner",
+                "operationId": "3aa48f3e4dd090df35623b39ffe2ea4b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the vehicle owner to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VehicleOwnerResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Vehicle owner not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Vehicle Owners"
+                ],
+                "summary": "Update a vehicle owner",
+                "operationId": "13c6d55dc70bd34867606f993f70a2f5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the vehicle owner to update",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateVehicleOwnerRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Vehicle owner updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VehicleOwnerResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Vehicle owner not found"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Vehicle Owners"
+                ],
+                "summary": "Delete a vehicle owner",
+                "operationId": "bc969df11ec9cac6c4e6335939570620",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the vehicle owner to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Vehicle owner deleted successfully"
+                    },
+                    "404": {
+                        "description": "Vehicle owner not found"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/vehicle-owners/{id}/is-deletable": {
+            "get": {
+                "tags": [
+                    "Vehicle Owners"
+                ],
+                "summary": "Check vehicle owner delability",
+                "operationId": "053456f7707f8d12abf749a7e72f59c0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the vehicle owner",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DeletabilityResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Vehicle owner not found"
+                    }
+                }
+            }
+        },
+        "/vehicle-ownerships": {
+            "get": {
+                "tags": [
+                    "Vehicle Ownerships"
+                ],
+                "summary": "Get vehicle ownerships",
+                "operationId": "ed2d80d3e78371b401320e705146e309",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/VehicleOwnershipResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Vehicle ownerships not found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Vehicle Ownerships"
+                ],
+                "summary": "Create a new vehicle ownership",
+                "operationId": "82b6a996e92981eaf014da8b6d63c210",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StoreVehicleOwnershipRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Vehicle ownership created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VehicleOwnershipResource"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/vehicle-ownerships/get-paginated": {
+            "get": {
+                "tags": [
+                    "Vehicle Ownerships"
+                ],
+                "summary": "Get paginated vehicle ownerships",
+                "operationId": "9030845ac6593a669e6d0a437df41e98",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": 20
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VehicleOwnershipPaginatedCollection"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Vehicle ownership not found"
+                    }
+                }
+            }
+        },
+        "/vehicle-ownerships/{vehicleId}/{ownerId}/{startDate}": {
+            "get": {
+                "tags": [
+                    "Vehicle Ownerships"
+                ],
+                "summary": "Get vehicle ownership",
+                "operationId": "117cd35e45dda221021a824bbba2e051",
+                "parameters": [
+                    {
+                        "name": "vehicleId",
+                        "in": "path",
+                        "description": "ID of the vehicle",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "ownerId",
+                        "in": "path",
+                        "description": "ID of the owner",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "startDate",
+                        "in": "path",
+                        "description": "Start date of ownership",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VehicleOwnershipResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Vehicle ownership not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Vehicle Ownerships"
+                ],
+                "summary": "Update a vehicle ownership",
+                "operationId": "0e1a0c53ec9bcaab94ee6838b02b4224",
+                "parameters": [
+                    {
+                        "name": "vehicleId",
+                        "in": "path",
+                        "description": "ID of the vehicle",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "ownerId",
+                        "in": "path",
+                        "description": "ID of the owner",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "startDate",
+                        "in": "path",
+                        "description": "Start date of ownership",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateVehicleOwnershipRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Vehicle owner updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VehicleOwnershipResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Vehicle ownership not found"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Vehicle Ownerships"
+                ],
+                "summary": "Delete a vehicle ownership",
+                "operationId": "f120b8e3aece4e717f1c7e9caf12cfde",
+                "parameters": [
+                    {
+                        "name": "vehicleId",
+                        "in": "path",
+                        "description": "ID of the vehicle",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "ownerId",
+                        "in": "path",
+                        "description": "ID of the owner",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "startDate",
+                        "in": "path",
+                        "description": "Start date of ownership",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Vehicle ownership deleted successfully"
+                    },
+                    "404": {
+                        "description": "Vehicle ownership not found"
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AuthRequest": {
+                "title": "Auth Request",
+                "required": [
+                    "username",
+                    "password"
+                ],
+                "properties": {
+                    "username": {},
+                    "password": {}
+                },
+                "type": "object"
+            },
+            "StoreMileageHistoryRequest": {
+                "title": "Mileage History Create Request",
+                "required": [
+                    "vehicleId",
+                    "mileage"
+                ],
+                "properties": {
+                    "vehicleId": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "mileage": {
+                        "type": "number",
+                        "format": "double",
+                        "example": "10"
+                    }
+                },
+                "type": "object"
+            },
+            "StoreMileageTrackerRequest": {
+                "title": "MileageTracker Create Request",
+                "required": [
+                    "serialNo"
+                ],
+                "properties": {
+                    "serialNo": {
+                        "type": "string",
+                        "example": "SE123123123"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateMileageTrackerRequest": {
+                "title": "MileageTracker Update Request",
+                "required": [
+                    "serialNo"
+                ],
+                "properties": {
+                    "serialNo": {
+                        "type": "string",
+                        "example": "SE123123123"
+                    }
+                },
+                "type": "object"
+            },
+            "StoreUserRequest": {
+                "title": "User Create Request",
+                "required": [
+                    "username",
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "example": "samantha"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "samantha@example.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "samantha123ABC"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateUserRequest": {
+                "title": "User Update Request",
+                "required": [
+                    "username",
+                    "email"
+                ],
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "example": "samantha"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "samantha@example.com"
+                    }
+                },
+                "type": "object"
+            },
+            "StoreVehicleRequest": {
+                "title": "Vehicle Create Request",
+                "required": [
+                    "mileageTrackerId",
+                    "vehicleNo",
+                    "chassisNo",
+                    "currentMileage"
+                ],
+                "properties": {
+                    "mileageTrackerId": {
+                        "type": "string",
+                        "example": "1"
+                    },
+                    "vehicleNo": {
+                        "type": "string",
+                        "example": "WPAC3434"
+                    },
+                    "chassisNo": {
+                        "type": "string",
+                        "example": "7788-334433"
+                    },
+                    "currentMileage": {
+                        "type": "interger",
+                        "example": "300"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateVehicleRequest": {
+                "title": "Vehicle Update Request",
+                "required": [
+                    "mileageTrackerId",
+                    "vehicleNo",
+                    "chassisNo",
+                    "currentMileage"
+                ],
+                "properties": {
+                    "mileageTrackerId": {
+                        "type": "string",
+                        "example": "1"
+                    },
+                    "vehicleNo": {
+                        "type": "string",
+                        "example": "WPAC3434"
+                    },
+                    "chassisNo": {
+                        "type": "string",
+                        "example": "7788-334433"
+                    },
+                    "currentMileage": {
+                        "type": "interger",
+                        "example": "300"
+                    }
+                },
+                "type": "object"
+            },
+            "StoreVehicleOwnerRequest": {
+                "title": "Vehicle Owner Create Request",
+                "required": [
+                    "NIC",
+                    "telephoneNo",
+                    "salutation",
+                    "name"
+                ],
+                "properties": {
+                    "NIC": {
+                        "type": "string",
+                        "example": "772345598V"
+                    },
+                    "telephoneNo": {
+                        "type": "string",
+                        "example": "0711212121"
+                    },
+                    "salutation": {
+                        "type": "string",
+                        "example": "MR"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Nishantha"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateVehicleOwnerRequest": {
+                "title": "Vehicle Owner Update Request",
+                "required": [
+                    "NIC",
+                    "telephoneNo",
+                    "salutation",
+                    "name"
+                ],
+                "properties": {
+                    "NIC": {
+                        "type": "string",
+                        "example": "772345598V"
+                    },
+                    "telephoneNo": {
+                        "type": "string",
+                        "example": "0711212121"
+                    },
+                    "salutation": {
+                        "type": "string",
+                        "example": "MR"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Nishantha"
+                    }
+                },
+                "type": "object"
+            },
+            "StoreVehicleOwnershipRequest": {
+                "title": "Vehicle Ownership Create Request",
+                "required": [
+                    "vehicleId",
+                    "vehicleOwnerId",
+                    "startDate"
+                ],
+                "properties": {
+                    "vehicleId": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "vehicleOwnerId": {
+                        "type": "integer",
+                        "example": "3"
+                    },
+                    "startDate": {
+                        "type": "string",
+                        "example": "2024-12-01"
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateVehicleOwnershipRequest": {
+                "title": "Vehicle Ownership Update Request",
+                "required": [
+                    "vehicleId",
+                    "vehicleOwnerId",
+                    "startDate"
+                ],
+                "properties": {
+                    "vehicleId": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "vehicleOwnerId": {
+                        "type": "integer",
+                        "example": "3"
+                    },
+                    "startDate": {
+                        "type": "string",
+                        "example": "2024-12-01"
+                    },
+                    "endDate": {
+                        "type": "string",
+                        "example": "2024-12-01"
+                    }
+                },
+                "type": "object"
+            },
+            "DeletabilityResource": {
+                "title": "Deletability Resource",
+                "properties": {
+                    "isDeletable": {
+                        "type": "boolean",
+                        "example": "false"
+                    },
+                    "messages": {
+                        "example": "[]"
+                    }
+                },
+                "type": "object"
+            },
+            "MileageHistoryPaginatedCollection": {
+                "title": "Mileage History Paginated Collection",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MileageHistoryResource"
+                        }
+                    },
+                    "total": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 20
+                    }
+                },
+                "type": "object"
+            },
+            "MileageHistoryResource": {
+                "title": "Mileage History Resource",
+                "properties": {
+                    "vehicleId": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": "1"
+                    },
+                    "mileage": {
+                        "type": "number",
+                        "format": "double",
+                        "example": "10"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "example": "2025-03-14T22:22:39.000000Z"
+                    }
+                },
+                "type": "object"
+            },
+            "MileageTrackerPaginatedCollection": {
+                "title": "Mileage Tracker Paginated Collection",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MileageTrackerResource"
+                        }
+                    },
+                    "total": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 20
+                    }
+                },
+                "type": "object"
+            },
+            "MileageTrackerResource": {
+                "title": "Mileage Tracker Resource",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": "1"
+                    },
+                    "serialNo": {
+                        "type": "string",
+                        "example": "SE123123123"
+                    },
+                    "publicKey": {
+                        "type": "string",
+                        "example": "99882233-334455"
+                    },
+                    "privateKey": {
+                        "type": "string",
+                        "example": "7788-334433"
+                    }
+                },
+                "type": "object"
+            },
+            "UserPaginatedCollection": {
+                "title": "User Paginated Collection",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UserResource"
+                        }
+                    },
+                    "total": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 20
+                    }
+                },
+                "type": "object"
+            },
+            "UserResource": {
+                "title": "User Resource",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": "1"
+                    },
+                    "username": {
+                        "type": "string",
+                        "example": "samantha"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "samantha@example.com"
+                    }
+                },
+                "type": "object"
+            },
+            "VehicleOwnerPaginatedCollection": {
+                "title": "Vehicle Owner Paginated Collection",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/VehicleOwnerResource"
+                        }
+                    },
+                    "total": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 20
+                    }
+                },
+                "type": "object"
+            },
+            "VehicleOwnerResource": {
+                "title": "Vehicle Owner Resource",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": "1"
+                    },
+                    "NIC": {
+                        "type": "string",
+                        "example": "772345598V"
+                    },
+                    "telephoneNo": {
+                        "type": "string",
+                        "example": "0711212121"
+                    },
+                    "salutation": {
+                        "type": "string",
+                        "example": "MR"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Nishantha"
+                    },
+                    "currentOwnershipsCount": {
+                        "type": "integer",
+                        "example": "1"
+                    }
+                },
+                "type": "object"
+            },
+            "VehicleOwnershipPaginatedCollection": {
+                "title": "Vehicle Ownership Paginated Collection",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/VehicleOwnershipResource"
+                        }
+                    },
+                    "total": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 20
+                    }
+                },
+                "type": "object"
+            },
+            "VehicleOwnershipResource": {
+                "title": "Vehicle Ownership Resource",
+                "properties": {
+                    "vehicleId": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "vehicleOwnerId": {
+                        "type": "integer",
+                        "example": "3"
+                    },
+                    "startDate": {
+                        "type": "string",
+                        "example": "2024-12-01"
+                    },
+                    "endDate": {
+                        "type": "string",
+                        "example": "2024-12-01"
+                    }
+                },
+                "type": "object"
+            },
+            "VehiclePaginatedCollection": {
+                "title": "Vehicle Paginated Collection",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/VehicleResource"
+                        }
+                    },
+                    "total": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 20
+                    }
+                },
+                "type": "object"
+            },
+            "VehicleResource": {
+                "title": "Vehicle Resource",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": "1"
+                    },
+                    "mileageTrackerId": {
+                        "type": "string",
+                        "example": "1"
+                    },
+                    "vehicleNo": {
+                        "type": "string",
+                        "example": "WPAC3434"
+                    },
+                    "chassisNo": {
+                        "type": "string",
+                        "example": "7788-334433"
+                    },
+                    "currentMileage": {
+                        "type": "interger",
+                        "example": "300"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Auth"
+        },
+        {
+            "name": "Mileage Histories",
+            "description": "Mileage Histories"
+        },
+        {
+            "name": "Mileage Trackers",
+            "description": "Mileage Trackers"
+        },
+        {
+            "name": "Users",
+            "description": "Users"
+        },
+        {
+            "name": "Vehicles",
+            "description": "Vehicles"
+        },
+        {
+            "name": "Vehicle Owners",
+            "description": "Vehicle Owners"
+        },
+        {
+            "name": "Vehicle Ownerships",
+            "description": "Vehicle Ownerships"
+        }
+    ]
+}
