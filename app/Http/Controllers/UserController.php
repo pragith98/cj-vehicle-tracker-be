@@ -88,6 +88,18 @@ class UserController extends Controller
      *         required=true,
      *         @OA\Schema(type="integer", format="int64", example=1)
      *     ),
+     *     @OA\Parameter(
+     *         name="username",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="string", example="samantha")
+     *     ),
+     *     @OA\Parameter(
+     *         name="email",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="string", example="samantha@gmail")
+     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",

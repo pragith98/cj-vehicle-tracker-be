@@ -601,6 +601,24 @@
                             "format": "int64",
                             "example": 1
                         }
+                    },
+                    {
+                        "name": "username",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "samantha"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "samantha@gmail"
+                        }
                     }
                 ],
                 "responses": {

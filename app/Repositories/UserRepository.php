@@ -40,11 +40,24 @@ class UserRepository implements UserRepositoryInterface
 
     public function getPaginated(PaginatedUserRequest $request): array
     {
+        $validatedRequest = $request->validated();
+        $username = $validatedRequest['username'] ?? null;
+        $email = $validatedRequest['email'] ?? null;
         $limit = $request->getLimit();
         $page = $request->getPage();
 
         try {
-            $paginated = $this->user->paginate($limit, ['*'], 'page', $page);
+            $query = $this->user->query();
+
+            if ($username) {
+                $query->where('username', 'like', '%' . $username . '%');
+            }
+    
+            if ($email) {
+                $query->where('email', 'like', '%' . $email . '%');
+            }
+
+            $paginated = $query->paginate($limit, ['*'], 'page', $page);
             return [
                 'data' => $paginated->items(),
                 'total' => $paginated->total()

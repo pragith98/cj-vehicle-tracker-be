@@ -32,7 +32,9 @@ class PaginatedUserRequest extends FormRequest
     {
         return [
             'limit' => ['required', 'integer', 'min:1'],
-            'page' => ['required', 'integer', 'min:1']
+            'page' => ['required', 'integer', 'min:1'],
+            'username' => ['nullable', 'max: 255'],
+            'email' => ['nullable', 'max: 255']
         ];
     }
 
