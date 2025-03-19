@@ -46,7 +46,7 @@ class UpdateMileageTrackerRequest extends FormRequest
             'serialNo' => [
                 'required', 
                 'max:255',
-                Rule::unique('mileage_trackers', 'serial_no')
+                Rule::unique('mileage_trackers', 'serial_no')->ignore($this->id)
             ]
         ];
     }

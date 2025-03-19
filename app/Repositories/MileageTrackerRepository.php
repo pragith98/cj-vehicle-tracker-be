@@ -73,7 +73,8 @@ class MileageTrackerRepository implements MileageTrackerRepositoryInterface
                 'serial_no' => $validatedData['serialNo']
             ];
 
-            return $this->mileageTracker->create($data);
+            $mileageTracker = $this->mileageTracker->create($data);
+            return $this->getById($mileageTracker->id);
         } catch (Exception $e) {
             throw new Exception("Failed to create mileage tracker.", 500);
         }
