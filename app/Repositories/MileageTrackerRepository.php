@@ -41,11 +41,24 @@ class MileageTrackerRepository implements MileageTrackerRepositoryInterface
 
     public function getPaginated(PaginatedMileageTrackerRequest $request): array
     {
+        $validatedRequest = $request->validated();
+        $serialNo = $validatedRequest['serial-no'] ?? null;
+        $status = $validatedRequest['status'] ?? null;
         $limit = $request->getLimit();
         $page = $request->getPage();
 
         try {
-            $paginated = $this->mileageTracker->paginate($limit, ['*'], 'page', $page);
+            $query = $this->mileageTracker->query();
+
+            if ($serialNo) {
+                $query->where('serial_no', 'like', '%' . $serialNo . '%');
+            }
+
+            if ($status) {
+                $query->where('status', 'like', '%' . $status . '%');
+            }
+
+            $paginated = $query->paginate($limit, ['*'], 'page', $page);
             return [
                 'data' => $paginated->items(),
                 'total' => $paginated->total()

@@ -79,6 +79,18 @@ class MileageTrackerController extends Controller
      *         @OA\Schema(type="integer", format="int64", example=20)
      *     ),
      *     @OA\Parameter(
+     *         name="serial-no",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="string", example="ss4er-sfsdf")
+     *     ),
+     *     @OA\Parameter(
+     *         name="status",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="string", example="available")
+     *     ),
+     *     @OA\Parameter(
      *         name="page",
      *         in="query",
      *         required=true,
