@@ -54,12 +54,12 @@ class UpdateVehicleRequest extends FormRequest
             ],
             'vehicleNo' => [
                 'required', 
-                'max:255', 
+                'max:20', 
                 Rule::unique('vehicles', 'vehicle_no')->ignore($this->id)
             ],
             'chassisNo' => [
                 'required', 
-                'max:255', 
+                'max:100', 
                 Rule::unique('vehicles', 'chassis_no')->ignore($this->id)
             ],
             'currentMileage' => ['required', 'integer']

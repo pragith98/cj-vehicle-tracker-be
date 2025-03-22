@@ -33,7 +33,7 @@ class PaginatedMileageTrackerRequest extends FormRequest
         return [
             'limit' => ['required', 'integer', 'min:1'],
             'page' => ['required', 'integer', 'min:1'],
-            'serial-no' => ['nullable', 'max: 255'],
+            'serialNo' => ['nullable', 'max: 255'],
             'status' => ['nullable', 'max: 255']
         ];
     }

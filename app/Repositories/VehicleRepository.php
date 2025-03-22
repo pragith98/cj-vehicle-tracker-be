@@ -41,11 +41,24 @@ class VehicleRepository implements VehicleRepositoryInterface
 
     public function getPaginated(PaginatedVehicleRequest $request): array
     {
+        $validatedRequest = $request->validated();
+        $vehicleNo = $validatedRequest['vehicleNo'] ?? null;
+        $chassisNo = $validatedRequest['chassisNo'] ?? null;
         $limit = $request->getLimit();
         $page = $request->getPage();
 
         try {
-            $paginated = $this->vehicle->paginate($limit, ['*'], 'page', $page);
+            $query = $this->vehicle->query();
+
+            if ($vehicleNo) {
+                $query->where('vehicle_no', 'like', '%' . $vehicleNo . '%');
+            }
+
+            if ($chassisNo) {
+                $query->where('chassis_no', 'like', '%' . $chassisNo . '%');
+            }
+
+            $paginated = $query->paginate($limit, ['*'], 'page', $page);
             return [
                 'data' => $paginated->items(),
                 'total' => $paginated->total()

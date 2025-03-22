@@ -42,7 +42,7 @@ class MileageTrackerRepository implements MileageTrackerRepositoryInterface
     public function getPaginated(PaginatedMileageTrackerRequest $request): array
     {
         $validatedRequest = $request->validated();
-        $serialNo = $validatedRequest['serial-no'] ?? null;
+        $serialNo = $validatedRequest['serialNo'] ?? null;
         $status = $validatedRequest['status'] ?? null;
         $limit = $request->getLimit();
         $page = $request->getPage();

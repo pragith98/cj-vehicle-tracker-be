@@ -13,8 +13,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Middleware\AuthenticateWithSanctumCookie;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(AuthenticateWithSanctumCookie::class)
-  ->prefix('users')
+// Route::middleware(AuthenticateWithSanctumCookie::class)
+Route::prefix('users')
   ->group(function () {
     Route::get('/', [UserController::class, 'index']);
     Route::get('/get-paginated', [UserController::class, 'getPaginated']);

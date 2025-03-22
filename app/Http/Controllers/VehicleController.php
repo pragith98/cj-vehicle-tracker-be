@@ -84,6 +84,18 @@ class VehicleController extends Controller
      *         required=true,
      *         @OA\Schema(type="integer", format="int64", example=1)
      *     ),
+     *     @OA\Parameter(
+     *         name="vehicleNo",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="string", example="wpac-1212")
+     *     ),
+     *     @OA\Parameter(
+     *         name="chassisNo",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="string", example="123-abc-456")
+     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",

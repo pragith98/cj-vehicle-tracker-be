@@ -13,8 +13,8 @@ use App\Http\Controllers\MileageTrackerController;
 use App\Http\Middleware\AuthenticateWithSanctumCookie;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(AuthenticateWithSanctumCookie::class)
-  ->prefix('mileage-trackers')
+// Route::middleware(AuthenticateWithSanctumCookie::class)
+Route::prefix('mileage-trackers')
   ->group(function () {
     Route::get('/', [MileageTrackerController::class, 'index']);
     Route::get('/get-paginated', [MileageTrackerController::class, 'getPaginated']);

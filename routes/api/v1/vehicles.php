@@ -13,8 +13,8 @@ use App\Http\Controllers\VehicleController;
 use App\Http\Middleware\AuthenticateWithSanctumCookie;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(AuthenticateWithSanctumCookie::class)
-  ->prefix('vehicles')
+// Route::middleware(AuthenticateWithSanctumCookie::class)
+Route::prefix('vehicles')
   ->group(function () {
     Route::get('/', [VehicleController::class, 'index']);
     Route::get('/get-paginated', [VehicleController::class, 'getPaginated']);

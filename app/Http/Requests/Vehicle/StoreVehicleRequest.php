@@ -54,12 +54,12 @@ class StoreVehicleRequest extends FormRequest
             ],
             'vehicleNo' => [
                 'required', 
-                'max:255', 
+                'max:20', 
                 Rule::unique('vehicles', 'vehicle_no')
             ],
             'chassisNo' => [
                 'required', 
-                'max:255', 
+                'max:100', 
                 Rule::unique('vehicles', 'chassis_no')
             ],
             'currentMileage' => ['required', 'integer']

@@ -300,6 +300,24 @@
                         }
                     },
                     {
+                        "name": "serialNo",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "ss4er-sfsdf"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "available"
+                        }
+                    },
+                    {
                         "name": "page",
                         "in": "query",
                         "required": true,
@@ -838,6 +856,24 @@
                             "type": "integer",
                             "format": "int64",
                             "example": 1
+                        }
+                    },
+                    {
+                        "name": "vehicleNo",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "wpac-1212"
+                        }
+                    },
+                    {
+                        "name": "chassisNo",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "123-abc-456"
                         }
                     }
                 ],
