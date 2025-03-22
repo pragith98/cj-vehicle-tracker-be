@@ -36,6 +36,11 @@ class Vehicle extends Model
             ->whereNull('end_date');
     }
 
+    public function mileageTracker()
+    {
+        return $this->hasOne(MileageTracker::class, 'id', 'mileage_tracker_id');
+    }
+
     protected static function boot()
     {
         parent::boot();

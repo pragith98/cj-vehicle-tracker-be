@@ -875,6 +875,15 @@
                             "type": "string",
                             "example": "123-abc-456"
                         }
+                    },
+                    {
+                        "name": "mileageTrackerSerialNo",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "qwe1234"
+                        }
                     }
                 ],
                 "responses": {
@@ -2072,10 +2081,6 @@
                         "format": "int64",
                         "example": "1"
                     },
-                    "mileageTrackerId": {
-                        "type": "string",
-                        "example": "1"
-                    },
                     "vehicleNo": {
                         "type": "string",
                         "example": "WPAC3434"
@@ -2085,8 +2090,11 @@
                         "example": "7788-334433"
                     },
                     "currentMileage": {
-                        "type": "interger",
-                        "example": "300"
+                        "type": "integer",
+                        "example": "400"
+                    },
+                    "mileageTracker": {
+                        "$ref": "#/components/schemas/MileageTrackerResource"
                     }
                 },
                 "type": "object"

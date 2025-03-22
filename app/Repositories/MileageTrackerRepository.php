@@ -11,6 +11,7 @@
 
 namespace App\Repositories;
 
+use App\Enums\MileageTrackerStatus;
 use App\Http\Requests\MileageTracker\PaginatedMileageTrackerRequest;
 use App\Http\Requests\MileageTracker\StoreMileageTrackerRequest;
 use App\Http\Requests\MileageTracker\UpdateMileageTrackerRequest;
@@ -191,6 +192,20 @@ class MileageTrackerRepository implements MileageTrackerRepositoryInterface
             throw new Exception("Mileage tracker with ID {$id} not found.", 404);
         } catch (Exception $e) {
             throw new Exception("Failed to update mileage tracker key.", 500);
+        }
+    }
+
+    public function updateStatus(
+        int $id,
+        MileageTrackerStatus $status
+    ): void {
+        try {
+            $mileageTracker = $this->mileageTracker->findOrFail($id);
+            $mileageTracker->status = $status;
+
+            $mileageTracker->save();
+        } catch (Exception $e) {
+            throw $e;
         }
     }
 }

@@ -96,6 +96,12 @@ class VehicleController extends Controller
      *         required=false,
      *         @OA\Schema(type="string", example="123-abc-456")
      *     ),
+     *     @OA\Parameter(
+     *         name="mileageTrackerSerialNo",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="string", example="qwe1234")
+     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",

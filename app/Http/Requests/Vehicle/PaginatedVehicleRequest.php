@@ -34,7 +34,8 @@ class PaginatedVehicleRequest extends FormRequest
             'limit' => ['required', 'integer', 'min:0'],
             'page' => ['required', 'integer', 'min:1'],
             'vehicleNo' => ['nullable', 'max: 255'],
-            'chassisNo' => ['nullable', 'max: 255']
+            'chassisNo' => ['nullable', 'max: 255'],
+            'mileageTrackerSerialNo' => ['nullable', 'max: 255']
         ];
     }
 

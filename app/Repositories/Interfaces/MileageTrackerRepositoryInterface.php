@@ -11,6 +11,7 @@
 
 namespace App\Repositories\Interfaces;
 
+use App\Enums\MileageTrackerStatus;
 use App\Http\Requests\MileageTracker\PaginatedMileageTrackerRequest;
 use App\Http\Requests\MileageTracker\StoreMileageTrackerRequest;
 use App\Http\Requests\MileageTracker\UpdateMileageTrackerRequest;
@@ -38,4 +39,9 @@ interface MileageTrackerRepositoryInterface
     public function isDeletable(int $id): DeletabilityResource;
 
     public function generateKey(int $id): MileageTracker;
+
+    public function updateStatus(
+        int $id,
+        MileageTrackerStatus $status
+    ): void;
 }
