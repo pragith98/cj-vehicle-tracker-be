@@ -32,7 +32,10 @@ class PaginatedVehicleOwnerRequest extends FormRequest
     {
         return [
             'limit' => ['required', 'integer', 'min:1'],
-            'page' => ['required', 'integer', 'min:1']
+            'page' => ['required', 'integer', 'min:1'],
+            'telephoneNo' => ['nullable', 'max: 255'],
+            'NIC' => ['nullable', 'max: 255'],
+            'name' => ['nullable', 'max: 255']
         ];
     }
 

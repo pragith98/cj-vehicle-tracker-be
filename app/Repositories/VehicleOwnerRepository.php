@@ -33,7 +33,7 @@ class VehicleOwnerRepository implements VehicleOwnerRepositoryInterface
     public function getAll(): Collection
     {
         try {
-            return $this->vehicleOwner->all();
+            return $this->vehicleOwner->with('currentOwnerships')->get();
         } catch (ModelNotFoundException $e) {
             throw new Exception("Vehicle owners not found.", 404);
         }
@@ -41,11 +41,30 @@ class VehicleOwnerRepository implements VehicleOwnerRepositoryInterface
 
     public function getPaginated(PaginatedVehicleOwnerRequest $request): array
     {
+        $validatedRequest = $request->validated();
+        $name = $validatedRequest['name'] ?? null;
+        $telephoneNo = $validatedRequest['telephoneNo'] ?? null;
+        $NIC = $validatedRequest['NIC'] ?? null;
         $limit = $request->getLimit();
         $page = $request->getPage();
 
         try {
-            $paginated = $this->vehicleOwner->paginate($limit, ['*'], 'page', $page);
+            $query = $this->vehicleOwner->query();
+
+            if ($name) {
+                $query->where('name', 'like', '%' . $name . '%');
+            }
+
+            if ($telephoneNo) {
+                $query->where('telephone_no', 'like', '%' . $telephoneNo . '%');
+            }
+
+            if ($NIC) {
+                $query->where('NIC', 'like', '%' . $NIC . '%');
+            }
+
+            $paginated = $query->with('currentOwnerships')
+                ->paginate($limit, ['*'], 'page', $page);
             return [
                 'data' => $paginated->items(),
                 'total' => $paginated->total()
@@ -76,7 +95,8 @@ class VehicleOwnerRepository implements VehicleOwnerRepositoryInterface
                 'name' => $validatedData['name']
             ];
 
-            return $this->vehicleOwner->create($data);
+            $vehicleOwner = $this->vehicleOwner->create($data);
+            return $this->getById($vehicleOwner->id);
         } catch (Exception $e) {
             throw new Exception("Failed to create vehicle owner.", 500);
         }
@@ -99,7 +119,7 @@ class VehicleOwnerRepository implements VehicleOwnerRepositoryInterface
             ];
 
             $vehicleOwner->update($data);
-            return $vehicleOwner;
+            return $this->getById($id);
         } catch (ModelNotFoundException $e) {
             throw new Exception("Vehicle owner with ID {$id} not found.", 404);
         } catch (Exception $e) {

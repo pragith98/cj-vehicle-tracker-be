@@ -84,6 +84,24 @@ class VehicleOwnerController extends Controller
      *         required=true,
      *         @OA\Schema(type="integer", format="int64", example=1)
      *     ),
+     *     @OA\Parameter(
+     *         name="telephoneNo",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="string", example="0712345678")
+     *     ),
+     *     @OA\Parameter(
+     *         name="name",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="string", example="samantha")
+     *     ),
+     *     @OA\Parameter(
+     *         name="NIC",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(type="string", example="783457787v")
+     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
