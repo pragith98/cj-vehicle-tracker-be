@@ -36,4 +36,6 @@ interface VehicleOwnerRepositoryInterface
     public function isDeletable(int $id): DeletabilityResource;
 
     public function delete(int $id): bool;
+
+    public function getVehicles(int $id): array;
 }

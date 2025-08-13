@@ -41,6 +41,12 @@ class VehicleOwner extends Model
             ->whereNull('end_date');
     }
 
+    public function pastOwnerships()
+    {
+        return $this->hasMany(VehicleOwnership::class, 'vehicle_owner_id')
+            ->whereNotNull('end_date');
+    }
+
     protected static function boot()
     {
         parent::boot();

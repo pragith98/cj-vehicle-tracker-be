@@ -1139,6 +1139,33 @@
                             "format": "int64",
                             "example": 1
                         }
+                    },
+                    {
+                        "name": "telephoneNo",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "0712345678"
+                        }
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "samantha"
+                        }
+                    },
+                    {
+                        "name": "NIC",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "783457787v"
+                        }
                     }
                 ],
                 "responses": {
@@ -1293,6 +1320,41 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/DeletabilityResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Vehicle owner not found"
+                    }
+                }
+            }
+        },
+        "/vehicle-owners/{id}/vehicles": {
+            "get": {
+                "tags": [
+                    "Vehicle Owners"
+                ],
+                "summary": "Get vehicles of owner",
+                "operationId": "ae501982455a74ea09b067430ebb1a99",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the vehicle owner to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VehicleOwnerVehicleCollection"
                                 }
                             }
                         }
@@ -2013,6 +2075,54 @@
                     "currentOwnershipsCount": {
                         "type": "integer",
                         "example": "1"
+                    }
+                },
+                "type": "object"
+            },
+            "VehicleOwnerVehicleCollection": {
+                "title": "Vehicle Owner Vehicle Collection",
+                "properties": {
+                    "data": {
+                        "properties": {
+                            "currentOwnerships": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/VehicleOwnerVehicleResource"
+                                }
+                            },
+                            "pastOwnerships": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/VehicleOwnerVehicleResource"
+                                }
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "VehicleOwnerVehicleResource": {
+                "title": "Vehicle Owner Vehicle Resource",
+                "properties": {
+                    "vehicleId": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "vehicleOwnerId": {
+                        "type": "integer",
+                        "example": "3"
+                    },
+                    "startDate": {
+                        "type": "string",
+                        "example": "2024-12-01"
+                    },
+                    "endDate": {
+                        "type": "string",
+                        "example": "2024-12-01"
+                    },
+                    "vehicle": {
+                        "$ref": "#/components/schemas/VehicleResource"
                     }
                 },
                 "type": "object"

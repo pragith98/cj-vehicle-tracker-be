@@ -17,6 +17,8 @@ use App\Http\Requests\VehicleOwner\PaginatedVehicleOwnerRequest;
 use App\Http\Requests\VehicleOwner\StoreVehicleOwnerRequest;
 use App\Http\Resources\VehicleOwnerPaginatedCollection;
 use App\Http\Resources\VehicleOwnerResource;
+use App\Http\Resources\VehicleOwnerVehicleCollection;
+use App\Http\Resources\VehicleOwnerVehiclesResource;
 use App\Repositories\Interfaces\VehicleOwnerRepositoryInterface;
 use Exception;
 
@@ -303,6 +305,43 @@ class VehicleOwnerController extends Controller
         $id = (int) $id;
         try {
             return $this->repository->isDeletable($id);
+        } catch (Exception $e) {
+            return ApiResponse::error($e->getMessage(), 404);
+        }
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/vehicle-owners/{id}/vehicles",
+     *     summary="Get vehicles of owner",
+     *     tags={"Vehicle Owners"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         required=true,
+     *         description="ID of the vehicle owner to retrieve",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             ref="#/components/schemas/VehicleOwnerVehicleCollection"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Vehicle owner not found"
+     *     )
+     * )
+     */
+    public function getVehicles(string $id)
+    {
+        $id = (int) $id;
+        try {
+            $vehicles = $this->repository->getVehicles($id);
+            return new VehicleOwnerVehicleCollection($vehicles);
         } catch (Exception $e) {
             return ApiResponse::error($e->getMessage(), 404);
         }

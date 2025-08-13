@@ -15,6 +15,7 @@ use App\Http\Requests\VehicleOwner\UpdateVehicleOwnerRequest;
 use App\Http\Requests\VehicleOwner\PaginatedVehicleOwnerRequest;
 use App\Http\Requests\VehicleOwner\StoreVehicleOwnerRequest;
 use App\Http\Resources\DeletabilityResource;
+use App\Http\Resources\VehicleOwnerVehicleResource;
 use App\Models\VehicleOwner;
 use App\Repositories\Interfaces\VehicleOwnerRepositoryInterface;
 use Exception;
@@ -158,6 +159,22 @@ class VehicleOwnerRepository implements VehicleOwnerRepositoryInterface
                 $isDeletable,
                 $messages
             );
+        } catch (ModelNotFoundException $e) {
+            throw new Exception("Vehicle owner with ID {$id} not found.", 404);
+        }
+    }
+
+    public function getVehicles(int $id): array
+    {
+        try {
+            $ownerships = $this->vehicleOwner
+                ->with(['currentOwnerships','pastOwnerships'])
+                ->findOrFail($id);
+
+            return [
+                'currentOwnerships' => VehicleOwnerVehicleResource::collection($ownerships->currentOwnerships),
+                'pastOwnerships' => VehicleOwnerVehicleResource::collection($ownerships->pastOwnerships)
+            ];
         } catch (ModelNotFoundException $e) {
             throw new Exception("Vehicle owner with ID {$id} not found.", 404);
         }

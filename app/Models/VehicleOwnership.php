@@ -29,6 +29,16 @@ class VehicleOwnership extends Model
         'end_date'
     ];
 
+    public function owner()
+    {
+        return $this->belongsTo(VehicleOwner::class, 'vehicle_owner_id');
+    }
+
+    public function vehicle()
+    {
+        return $this->belongsTo(Vehicle::class, 'vehicle_id');
+    }
+
     protected static function boot()
     {
         parent::boot();

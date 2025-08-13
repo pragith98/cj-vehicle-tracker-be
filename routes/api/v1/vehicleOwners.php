@@ -23,4 +23,5 @@ Route::prefix('vehicle-owners')
     Route::put('/{id}', [VehicleOwnerController::class, 'update']);
     Route::delete('/{id}', [VehicleOwnerController::class, 'destroy']);
     Route::get('/{id}/is-deletable', [VehicleOwnerController::class, 'isDeletable']);
+    Route::get('/{id}/vehicles', [VehicleOwnerController::class, 'getVehicles']);
 });
